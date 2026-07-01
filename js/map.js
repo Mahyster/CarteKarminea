@@ -23,7 +23,9 @@ const closeExplorerButton = document.getElementById("closeExplorer");
 const explorerPanel = document.getElementById("explorerPanel");
 const placesList = document.getElementById("placesList");
 const placesSearchInput = document.getElementById("placesSearch");
-const filterButtons = document.querySelectorAll(".filter-button");
+
+const categoryControlButtons = document.querySelectorAll(".category-control");
+const mapCategoryPanel = document.getElementById("mapCategoryPanel");
 
 const visiblePlacesCount = document.getElementById("visiblePlacesCount");
 
@@ -53,12 +55,15 @@ let hasPointerMoved = false;
 
 let placesSearchQuery = "";
 
-let activeTypeFilter = "all";
+let activeCategories = new Set();
 
 const smoothness = 0.18;
 
 function applyTransform() {
   mapLayer.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) scale(${currentScale})`;
+
+  const markerScale = 1 / currentScale;
+  markersLayer.style.setProperty("--marker-scale", markerScale);
 }
 
 function animateMap() {
@@ -128,6 +133,7 @@ async function loadPlaces() {
     }
 
     places = await response.json();
+    initializeCategories();
     renderPlaces();
     renderPlacesList();
   } catch (error) {
@@ -166,9 +172,11 @@ function renderPlaces() {
     });
 
     marker.addEventListener("click", (event) => {
-      event.stopPropagation();
-      openPlaceCard(place);
-    });
+    event.stopPropagation();
+
+    openPlaceCard(place);
+    focusPlace(place);
+});
 
     markersLayer.appendChild(marker);
   });
@@ -373,7 +381,7 @@ function focusPlace(place) {
 
   const rect = viewport.getBoundingClientRect();
 
-  const focusScale = Math.min(maxScale, Math.max(targetScale, minScale * 2.2));
+  const focusScale = Math.min(maxScale, Math.max(targetScale, minScale * 10));
 
   targetScale = focusScale;
   targetX = rect.width / 2 - placeX * focusScale;
@@ -384,11 +392,19 @@ function toggleExplorerPanel() {
   const isNowClosed = explorerPanel.classList.toggle("is-closed");
 
   explorerTabButton.classList.toggle("is-open", !isNowClosed);
+
+  if (mapCategoryPanel) {
+    mapCategoryPanel.classList.toggle("is-hidden", !isNowClosed);
+  }
 }
 
 function closeExplorerPanel() {
   explorerPanel.classList.add("is-closed");
   explorerTabButton.classList.remove("is-open");
+
+  if (mapCategoryPanel) {
+    mapCategoryPanel.classList.remove("is-hidden");
+  }
 }
 
 function initializeMap() {
@@ -398,6 +414,25 @@ function initializeMap() {
 
   fitMapToScreen(true);
   loadPlaces();
+}
+
+function initializeCategories() {
+  const availableCategories = new Set(
+    places
+      .map((place) => place.type)
+      .filter(Boolean)
+  );
+
+  activeCategories = new Set(availableCategories);
+
+  categoryControlButtons.forEach((button) => {
+    const category = button.dataset.category;
+    const isAvailable = availableCategories.has(category);
+
+    button.hidden = !isAvailable;
+    button.classList.toggle("is-active", isAvailable);
+    button.setAttribute("aria-pressed", String(isAvailable));
+  });
 }
 
 function placeMatchesSearch(place) {
@@ -417,10 +452,26 @@ function placeMatchesSearch(place) {
       .toLowerCase()
       .includes(normalizedQuery);
 
-  const matchesType =
-    activeTypeFilter === "all" || place.type === activeTypeFilter;
+  const matchesCategory = activeCategories.has(place.type);
 
-  return matchesSearch && matchesType;
+  return matchesSearch && matchesCategory;
+}
+
+function toggleCategory(category) {
+  if (activeCategories.has(category)) {
+    activeCategories.delete(category);
+  } else {
+    activeCategories.add(category);
+  }
+
+  categoryControlButtons.forEach((button) => {
+    const isActive = activeCategories.has(button.dataset.category);
+
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+
+  updatePlacesVisibility();
 }
 
 if (mapImage.complete) {
@@ -522,9 +573,9 @@ placesSearchInput.addEventListener("input", (event) => {
   updatePlacesVisibility();
 });
 
-filterButtons.forEach((button) => {
+categoryControlButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    setActiveTypeFilter(button.dataset.filter);
+    toggleCategory(button.dataset.category);
   });
 });
 
