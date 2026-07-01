@@ -16,7 +16,7 @@
 
       <div>
         <h1>Atlas Officiel de Karminéa</h1>
-        <p>Territoire principal</p>
+        <p>N'hésitez pas à faire des remarques pour me permettre d'améliorer l'expérience de cartographie.</p>
       </div>
     </div>
 
@@ -39,36 +39,38 @@
         <button id="closeExplorer" class="explorer-close">×</button>
       </div>
 
-      <div class="explorer-search">
-  <input
-    id="placesSearch"
-    type="search"
-    placeholder="Rechercher un lieu, un type, un quartier..."
-    autocomplete="off"
-  />
-</div>
+      <div class="explorer-section">
+        <div class="explorer-title-row">
+          <h3>Lieux recensés</h3>
+          <span id="visiblePlacesCount" class="visible-count">0 lieu</span>
+        </div>
 
-<div class="explorer-filters">
-  <button class="filter-button is-active" type="button" data-filter="all">
-    Tous
-  </button>
+        <div class="explorer-search">
+          <input
+            id="placesSearch"
+            type="search"
+            placeholder="Rechercher un lieu, un type, un quartier..."
+            autocomplete="off"
+          />
+        </div>
 
-  <button class="filter-button filter-commerce" type="button" data-filter="commerce">
-    Commerce
-  </button>
+        <div class="explorer-filters">
+          <button class="filter-button is-active" type="button" data-filter="all">
+            Tous
+          </button>
 
-  <button class="filter-button filter-institution" type="button" data-filter="institution">
-    Institution
-  </button>
+          <button class="filter-button filter-commerce" type="button" data-filter="commerce">
+            Commerce
+          </button>
 
-  <button class="filter-button filter-divertissement" type="button" data-filter="divertissement">
-    Divertissement
-  </button>
-</div>
+          <button class="filter-button filter-institution" type="button" data-filter="institution">
+            Institution
+          </button>
 
-<div id="placesList" class="places-list">
-  <p class="empty-list">Chargement des lieux...</p>
-</div>
+          <button class="filter-button filter-divertissement" type="button" data-filter="divertissement">
+            Divertissement
+          </button>
+        </div>
 
         <div id="placesList" class="places-list">
           <p class="empty-list">Chargement des lieux...</p>
