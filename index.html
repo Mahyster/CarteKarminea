@@ -55,20 +55,40 @@
         </div>
 
         <div class="explorer-filters">
-          <button class="filter-button is-active" type="button" data-filter="all">
-            Tous
-          </button>
-
-          <button class="filter-button filter-commerce" type="button" data-filter="commerce">
+          <button
+            class="filter-button category-control is-active filter-commerce"
+            type="button"
+            data-category="commerce"
+            aria-pressed="true"
+          >
             Commerce
           </button>
 
-          <button class="filter-button filter-institution" type="button" data-filter="institution">
+          <button
+            class="filter-button category-control is-active filter-institution"
+            type="button"
+            data-category="institution"
+            aria-pressed="true"
+          >
             Institution
           </button>
 
-          <button class="filter-button filter-divertissement" type="button" data-filter="divertissement">
+          <button
+            class="filter-button category-control is-active filter-divertissement"
+            type="button"
+            data-category="divertissement"
+            aria-pressed="true"
+          >
             Divertissement
+          </button>
+
+          <button
+            class="filter-button category-control is-active filter-sante"
+            type="button"
+            data-category="sante"
+            aria-pressed="true"
+          >
+            Santé
           </button>
         </div>
 
@@ -112,6 +132,54 @@
         <strong>Mode placement actif</strong>
         <span>Clique sur la carte pour récupérer la position du point.</span>
         <code id="placementCoords">Aucune position sélectionnée</code>
+      </div>
+
+      <div id="mapCategoryPanel" class="map-category-panel">
+        <p>Catégories visibles</p>
+
+        <button
+          class="map-category-check category-control is-active"
+          type="button"
+          data-category="commerce"
+          aria-pressed="true"
+        >
+          <span class="check-box"></span>
+          <span class="category-dot category-commerce"></span>
+          Commerce
+        </button>
+
+        <button
+          class="map-category-check category-control is-active"
+          type="button"
+          data-category="institution"
+          aria-pressed="true"
+        >
+          <span class="check-box"></span>
+          <span class="category-dot category-institution"></span>
+          Institution
+        </button>
+
+        <button
+          class="map-category-check category-control is-active"
+          type="button"
+          data-category="divertissement"
+          aria-pressed="true"
+        >
+          <span class="check-box"></span>
+          <span class="category-dot category-divertissement"></span>
+          Divertissement
+        </button>
+
+        <button
+          class="map-category-check category-control is-active"
+          type="button"
+          data-category="sante"
+          aria-pressed="true"
+        >
+          <span class="check-box"></span>
+          <span class="category-dot category-sante"></span>
+          Santé
+        </button>
       </div>
     </section>
   </main>
