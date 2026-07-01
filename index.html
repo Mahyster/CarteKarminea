@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Atlas Officiel de Karminéa</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">🗺️</div>
+
+      <div>
+        <h1>Atlas Officiel de Karminéa</h1>
+        <p>Territoire principal</p>
+      </div>
+    </div>
+
+    <div class="map-controls">
+      <button id="togglePlacement">Mode placement</button>
+      <button id="zoomOut">−</button>
+      <button id="resetView">Recentrer</button>
+      <button id="zoomIn">+</button>
+    </div>
+  </header>
+
+  <main class="app">
+    <aside id="explorerPanel" class="explorer-panel is-closed">
+      <div class="explorer-header">
+        <div>
+          <p>Atlas de Karminéa</p>
+          <h2>Explorer</h2>
+        </div>
+
+        <button id="closeExplorer" class="explorer-close">×</button>
+      </div>
+
+      <div class="explorer-search">
+  <input
+    id="placesSearch"
+    type="search"
+    placeholder="Rechercher un lieu, un type, un quartier..."
+    autocomplete="off"
+  />
+</div>
+
+<div class="explorer-filters">
+  <button class="filter-button is-active" type="button" data-filter="all">
+    Tous
+  </button>
+
+  <button class="filter-button filter-commerce" type="button" data-filter="commerce">
+    Commerce
+  </button>
+
+  <button class="filter-button filter-institution" type="button" data-filter="institution">
+    Institution
+  </button>
+
+  <button class="filter-button filter-divertissement" type="button" data-filter="divertissement">
+    Divertissement
+  </button>
+</div>
+
+<div id="placesList" class="places-list">
+  <p class="empty-list">Chargement des lieux...</p>
+</div>
+
+        <div id="placesList" class="places-list">
+          <p class="empty-list">Chargement des lieux...</p>
+        </div>
+      </div>
+    </aside>
+
+    <button id="explorerTab" class="explorer-tab" type="button">
+      <span class="explorer-tab-icon">☰</span>
+      <span class="explorer-tab-text">Explorer</span>
+    </button>
+
+    <section class="map-panel">
+      <div id="mapViewport" class="map-viewport">
+        <div id="mapLayer" class="map-layer">
+          <img
+            id="mapImage"
+            class="map-image"
+            src="images/map.png"
+            alt="Carte de Karminéa"
+            draggable="false"
+          />
+
+          <div id="markersLayer" class="markers-layer"></div>
+        </div>
+      </div>
+
+      <aside id="placeCard" class="place-card is-hidden">
+        <button id="closePlaceCard" class="place-card-close">×</button>
+
+        <p id="placeType" class="place-type">Lieu</p>
+        <h2 id="placeName">Nom du lieu</h2>
+        <p id="placeDistrict" class="place-district">Quartier</p>
+        <p id="placeDescription" class="place-description">Description du lieu.</p>
+        <p id="placeCoords" class="place-coords">Coordonnées : inconnues</p>
+      </aside>
+
+      <div id="placementHelper" class="placement-helper is-hidden">
+        <strong>Mode placement actif</strong>
+        <span>Clique sur la carte pour récupérer la position du point.</span>
+        <code id="placementCoords">Aucune position sélectionnée</code>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/map.js"></script>
+</body>
+</html>

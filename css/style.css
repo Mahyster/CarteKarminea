@@ -1,0 +1,825 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: Georgia, "Times New Roman", serif;
+  background: #f3dfb3;
+  color: #3b2414;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Barre du haut */
+
+.topbar {
+  height: 82px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background:
+    linear-gradient(90deg, rgba(255, 242, 205, 0.96), rgba(255, 226, 155, 0.96)),
+    #f7df9f;
+  border-bottom: 3px solid rgba(163, 43, 35, 0.65);
+  box-shadow: 0 5px 20px rgba(86, 48, 18, 0.22);
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 2px solid rgba(163, 43, 35, 0.65);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.7), rgba(255, 217, 132, 0.6));
+  font-size: 25px;
+  box-shadow:
+    inset 0 0 10px rgba(255, 255, 255, 0.6),
+    0 3px 10px rgba(90, 45, 15, 0.18);
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 25px;
+  letter-spacing: 0.6px;
+  color: #8d241e;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.brand p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: rgba(75, 45, 22, 0.75);
+}
+
+/* Boutons */
+
+.map-controls {
+  display: flex;
+  gap: 9px;
+}
+
+.map-controls button {
+  border: 2px solid rgba(143, 35, 30, 0.55);
+  background:
+    linear-gradient(180deg, #fff4cf, #f5c96d);
+  color: #74211c;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-shadow: 0 3px 8px rgba(94, 48, 16, 0.16);
+}
+
+.map-controls button:hover {
+  background:
+    linear-gradient(180deg, #fff9df, #ffd87c);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(94, 48, 16, 0.22);
+}
+
+.map-controls button:active {
+  transform: translateY(0);
+}
+
+/* Application */
+
+.app {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  position: relative;
+}
+
+.map-panel {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.75), transparent 48%),
+    linear-gradient(135deg, #f9e9bd, #eec977);
+  overflow: hidden;
+}
+
+.map-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 42px 42px;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Carte */
+
+.map-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  z-index: 3;
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
+.map-viewport.is-dragging {
+  cursor: grabbing;
+}
+
+.map-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.map-image {
+  display: block;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+  image-rendering: auto;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 3px rgba(120, 55, 20, 0.2),
+    0 12px 35px rgba(78, 38, 12, 0.28);
+}
+
+/* Couche des points d'intérêt */
+
+.markers-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.map-marker {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 2px solid rgba(116, 33, 28, 0.9);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #fff8d8 0%, #ffd36a 45%, #b8322b 100%);
+  box-shadow:
+  0 0 0 3px rgba(255, 215, 110, 0.22),
+  0 0 12px rgba(184, 50, 43, 0.38);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  pointer-events: auto;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+  z-index: 5;
+}
+
+.map-marker::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 216, 120, 0.5);
+  opacity: 0;
+  transform: scale(0.75);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.map-marker::after {
+  content: attr(data-name);
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%) translateY(4px);
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 244, 211, 0.96);
+  border: 1px solid rgba(143, 35, 30, 0.4);
+  color: #74211c;
+  font-size: 11px;
+  font-weight: 700;
+  box-shadow: 0 5px 14px rgba(94, 48, 16, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.map-marker:hover {
+  transform: translate(-50%, -50%) scale(1.5);
+  filter: brightness(1.12);
+  box-shadow:
+  0 0 0 5px rgba(255, 215, 110, 0.32),
+  0 0 20px rgba(184, 50, 43, 0.55);
+  z-index: 10;
+}
+
+.map-marker:hover::before {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.map-marker:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Fiche lieu */
+
+.place-card {
+  position: absolute;
+  right: 28px;
+  bottom: 28px;
+  width: 320px;
+  max-width: calc(100% - 56px);
+  padding: 20px;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 249, 226, 0.98), rgba(250, 225, 166, 0.98));
+  border: 2px solid rgba(143, 35, 30, 0.45);
+  box-shadow: 0 14px 34px rgba(76, 38, 13, 0.28);
+  color: #3b2414;
+  z-index: 20;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.place-card.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+}
+
+.place-card-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  color: #8d241e;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.place-type {
+  margin: 0 0 6px;
+  color: #8d241e;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.place-card h2 {
+  margin: 0;
+  padding-right: 24px;
+  color: #74211c;
+  font-size: 23px;
+}
+
+.place-district {
+  margin: 6px 0 14px;
+  font-size: 14px;
+  color: rgba(59, 36, 20, 0.72);
+  font-style: italic;
+}
+
+.place-description {
+  margin: 0 0 14px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.place-coords {
+  margin: 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(143, 35, 30, 0.22);
+  color: rgba(59, 36, 20, 0.75);
+  font-size: 13px;
+}
+
+/* Mode placement */
+
+#togglePlacement.is-active {
+  background:
+    linear-gradient(180deg, #ffe2a1, #c73b32);
+  color: #fff8dc;
+  border-color: rgba(116, 33, 28, 0.85);
+}
+
+.placement-helper {
+  position: absolute;
+  left: 28px;
+  bottom: 28px;
+  width: 360px;
+  max-width: calc(100% - 56px);
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255, 249, 226, 0.96);
+  border: 2px solid rgba(143, 35, 30, 0.42);
+  box-shadow: 0 10px 28px rgba(76, 38, 13, 0.22);
+  color: #3b2414;
+  z-index: 22;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.placement-helper.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+
+.placement-helper strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #8d241e;
+  font-size: 14px;
+}
+
+.placement-helper span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: rgba(59, 36, 20, 0.75);
+}
+
+.placement-helper code {
+  display: block;
+  padding: 9px 10px;
+  border-radius: 8px;
+  background: rgba(116, 33, 28, 0.08);
+  color: #74211c;
+  font-size: 13px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Couleurs des marqueurs par type */
+
+.map-marker.marker-commerce {
+  border-color: rgba(170, 112, 20, 0.95);
+  background:
+    radial-gradient(circle, #fff9dd 0%, #ffd85e 45%, #e1a11f 100%);
+  box-shadow:
+    0 0 0 3px rgba(255, 210, 90, 0.28),
+    0 0 12px rgba(225, 161, 31, 0.42);
+}
+
+.map-marker.marker-commerce:hover {
+  box-shadow:
+    0 0 0 5px rgba(255, 210, 90, 0.36),
+    0 0 20px rgba(225, 161, 31, 0.58);
+}
+
+.map-marker.marker-institution {
+  border-color: rgba(137, 28, 28, 0.95);
+  background:
+    radial-gradient(circle, #fff0f0 0%, #df5454 46%, #9f1f1f 100%);
+  box-shadow:
+    0 0 0 3px rgba(223, 84, 84, 0.24),
+    0 0 12px rgba(159, 31, 31, 0.42);
+}
+
+.map-marker.marker-institution:hover {
+  box-shadow:
+    0 0 0 5px rgba(223, 84, 84, 0.34),
+    0 0 20px rgba(159, 31, 31, 0.58);
+}
+
+.map-marker.marker-divertissement {
+  border-color: rgba(30, 78, 158, 0.95);
+  background:
+    radial-gradient(circle, #eef6ff 0%, #63a8ff 46%, #2f6fd6 100%);
+  box-shadow:
+    0 0 0 3px rgba(99, 168, 255, 0.24),
+    0 0 12px rgba(47, 111, 214, 0.42);
+}
+
+.map-marker.marker-divertissement:hover {
+  box-shadow:
+    0 0 0 5px rgba(99, 168, 255, 0.34),
+    0 0 20px rgba(47, 111, 214, 0.58);
+}
+    
+/* Onglet latéral Explorer */
+
+.explorer-panel {
+  width: 330px;
+  flex: 0 0 330px;
+  height: 100%;
+  padding: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 248, 222, 0.98), rgba(246, 218, 153, 0.98));
+  border-right: 2px solid rgba(143, 35, 30, 0.35);
+  box-shadow: 6px 0 20px rgba(88, 48, 16, 0.16);
+  color: #3b2414;
+  overflow-y: auto;
+  transition:
+    margin-left 0.25s ease,
+    opacity 0.25s ease;
+  z-index: 6;
+}
+
+.explorer-panel.is-closed {
+  margin-left: -330px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.explorer-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(143, 35, 30, 0.22);
+}
+
+.explorer-header p {
+  margin: 0 0 4px;
+  color: rgba(59, 36, 20, 0.65);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.explorer-header h2 {
+  margin: 0;
+  color: #8d241e;
+  font-size: 25px;
+}
+
+.explorer-close {
+  border: none;
+  background: transparent;
+  color: #8d241e;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.explorer-section h3 {
+  margin: 0 0 12px;
+  color: #74211c;
+  font-size: 16px;
+}
+
+.places-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.empty-list {
+  margin: 0;
+  color: rgba(59, 36, 20, 0.65);
+  font-size: 14px;
+}
+
+.place-list-item {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(143, 35, 30, 0.22);
+  border-left: 5px solid rgba(143, 35, 30, 0.45);
+  border-radius: 12px;
+  background: rgba(255, 253, 241, 0.72);
+  color: #3b2414;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.place-list-item:hover {
+  transform: translateX(3px);
+  background: rgba(255, 255, 248, 0.95);
+  box-shadow: 0 6px 14px rgba(88, 48, 16, 0.14);
+}
+
+.place-list-item strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #74211c;
+  font-size: 15px;
+}
+
+.place-list-item span {
+  display: block;
+  color: rgba(59, 36, 20, 0.7);
+  font-size: 13px;
+}
+
+.place-list-item small {
+  display: block;
+  margin-top: 6px;
+  color: rgba(59, 36, 20, 0.55);
+  font-size: 12px;
+}
+
+/* Couleurs dans la liste */
+
+.place-list-item.list-commerce {
+  border-left-color: #e1a11f;
+}
+
+.place-list-item.list-institution {
+  border-left-color: #9f1f1f;
+}
+
+.place-list-item.list-divertissement {
+  border-left-color: #2f6fd6;
+}
+
+/* Onglet moderne Explorer */
+
+.explorer-tab {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  z-index: 35;
+  transform: translateY(-50%);
+
+  animation: explorerPulse 2.8s ease-in-out infinite;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 11px 14px;
+
+  border: 1px solid rgba(143, 35, 30, 0.22);
+  border-radius: 999px;
+
+  background:
+    linear-gradient(135deg, rgba(255, 252, 238, 0.96), rgba(255, 226, 160, 0.94));
+
+  color: #7c211c;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  font-size: 14px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 22px rgba(88, 48, 16, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+
+  backdrop-filter: blur(6px);
+
+  transition:
+    left 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.explorer-tab:hover {
+  animation: none;
+  transform: translateY(-50%) translateX(3px);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 248, 0.98), rgba(255, 215, 128, 0.98));
+
+  box-shadow:
+    0 10px 28px rgba(88, 48, 16, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.explorer-tab.is-open {
+  left: 348px;
+}
+
+.explorer-tab-icon {
+  width: 26px;
+  height: 26px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: rgba(143, 35, 30, 0.12);
+  color: #8d241e;
+
+  font-size: 15px;
+  line-height: 1;
+}
+
+.explorer-tab-text {
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+
+  font-size: 14px;
+  letter-spacing: 0.2px;
+}
+
+@keyframes explorerPulse {
+  0% {
+    transform: translateY(-50%) scale(1);
+  }
+
+  50% {
+    transform: translateY(-50%) scale(1.025);
+  }
+
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+/* Recherche Explorer */
+
+.explorer-search {
+  margin-bottom: 14px;
+}
+
+.explorer-search input {
+  width: 100%;
+  padding: 11px 12px;
+
+  border: 1px solid rgba(143, 35, 30, 0.26);
+  border-radius: 12px;
+
+  background: rgba(255, 255, 248, 0.82);
+  color: #3b2414;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+
+  outline: none;
+
+  box-shadow:
+    inset 0 1px 3px rgba(88, 48, 16, 0.08),
+    0 4px 10px rgba(88, 48, 16, 0.08);
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.explorer-search input::placeholder {
+  color: rgba(59, 36, 20, 0.48);
+}
+
+.explorer-search input:focus {
+  border-color: rgba(143, 35, 30, 0.55);
+  background: rgba(255, 255, 252, 0.96);
+  box-shadow:
+    0 0 0 3px rgba(255, 216, 120, 0.28),
+    inset 0 1px 3px rgba(88, 48, 16, 0.08);
+}
+
+/* Apparition / disparition smooth des marqueurs */
+
+.map-marker {
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.map-marker.is-hidden {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.35);
+  pointer-events: none;
+}
+
+/* Apparition / disparition smooth dans la liste */
+
+.places-list {
+  gap: 0;
+}
+
+.place-list-item {
+  overflow: hidden;
+  max-height: 110px;
+  margin-bottom: 10px;
+  opacity: 1;
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease,
+    max-height 0.22s ease,
+    margin-bottom 0.22s ease,
+    padding 0.22s ease,
+    border-color 0.22s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.place-list-item.is-hidden {
+  max-height: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+  transform: translateX(-8px);
+  border-color: transparent;
+  pointer-events: none;
+}
+
+.empty-list.is-hidden {
+  display: none;
+}
+
+/* Filtres Explorer */
+
+.explorer-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.filter-button {
+  padding: 7px 10px;
+
+  border: 1px solid rgba(143, 35, 30, 0.22);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 248, 0.68);
+  color: rgba(59, 36, 20, 0.78);
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.16s ease,
+    background 0.16s ease,
+    color 0.16s ease,
+    border-color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.filter-button:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 252, 0.95);
+  box-shadow: 0 4px 10px rgba(88, 48, 16, 0.12);
+}
+
+.filter-button.is-active {
+  color: #fff8dc;
+  border-color: rgba(116, 33, 28, 0.28);
+  box-shadow: 0 5px 14px rgba(88, 48, 16, 0.16);
+}
+
+.filter-button[data-filter="all"].is-active {
+  background: linear-gradient(135deg, #8d241e, #b9362e);
+}
+
+.filter-commerce.is-active {
+  background: linear-gradient(135deg, #e1a11f, #f0c14a);
+}
+
+.filter-institution.is-active {
+  background: linear-gradient(135deg, #9f1f1f, #d94a42);
+}
+
+.filter-divertissement.is-active {
+  background: linear-gradient(135deg, #2f6fd6, #63a8ff);
+}

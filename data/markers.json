@@ -1,0 +1,40 @@
+[
+  {
+    "id": "kopia_armory",
+    "name": "Kopia armurerie",
+    "type": "commerce",
+    "typeLabel": "Commerce",
+    "district": "Centre-ville",
+    "description": "Filière d'équipements et armures de Kopia",
+    "minecraftX": "À renseigner",
+    "minecraftZ": "À renseigner",
+    "xPercent": 62,
+    "yPercent": 45   },
+
+    {
+    "id": "banque-karminea",
+    "name": "Horace Bank",
+    "type": "institution",
+    "typeLabel": "Institution",
+    "district": "Centre-ville",
+    "description": "Institution financière majeure de Karminéa, au cœur des échanges économiques de la ville.",
+    "minecraftX": "À renseigner",
+    "minecraftZ": "À renseigner",
+    "xPercent": 83.82,
+    "yPercent": 48.32
+  },
+
+  {
+    "id": "kopia_boite",
+    "name": "Kopia Boîte de nuit",
+    "type": "divertissement",
+    "typeLabel": "Divertisement",
+    "district": "Centre-ville",
+    "description": "Filière discothèque de Kopia",
+    "minecraftX": "À renseigner",
+    "minecraftZ": "À renseigner",
+    "xPercent": 68.44,
+    "yPercent": 39.47   }
+
+
+]
