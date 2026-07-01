@@ -29,6 +29,8 @@ const mapCategoryPanel = document.getElementById("mapCategoryPanel");
 
 const visiblePlacesCount = document.getElementById("visiblePlacesCount");
 
+const highlightLayer = document.getElementById("highlightLayer");
+
 let currentScale = 1;
 let currentX = 0;
 let currentY = 0;
@@ -57,7 +59,10 @@ let placesSearchQuery = "";
 
 let activeCategories = new Set();
 
-const smoothness = 0.18;
+let smoothness = 0.18;
+
+const normalSmoothness = 0.18;
+const focusSmoothness = 0.01;
 
 function applyTransform() {
   mapLayer.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) scale(${currentScale})`;
@@ -71,9 +76,16 @@ function animateMap() {
   currentY += (targetY - currentY) * smoothness;
   currentScale += (targetScale - currentScale) * smoothness;
 
+  const distanceToTarget = Math.hypot(targetX - currentX, targetY - currentY);
+  const scaleDistance = Math.abs(targetScale - currentScale);
+
   if (Math.abs(targetX - currentX) < 0.01) currentX = targetX;
   if (Math.abs(targetY - currentY) < 0.01) currentY = targetY;
   if (Math.abs(targetScale - currentScale) < 0.0001) currentScale = targetScale;
+
+  if (distanceToTarget < 1 && scaleDistance < 0.001) {
+    smoothness = normalSmoothness;
+  }
 
   applyTransform();
 
@@ -151,6 +163,11 @@ function renderPlaces() {
 
   markersLayer.style.width = `${imageWidth}px`;
   markersLayer.style.height = `${imageHeight}px`;
+  highlightLayer.setAttribute("width", imageWidth);
+  highlightLayer.setAttribute("height", imageHeight);
+  highlightLayer.setAttribute("viewBox", `0 0 ${imageWidth} ${imageHeight}`);
+  highlightLayer.style.width = `${imageWidth}px`;
+  highlightLayer.style.height = `${imageHeight}px`;
 
   places.forEach((place) => {
     const marker = document.createElement("button");
@@ -237,7 +254,40 @@ function setActiveTypeFilter(filterValue) {
   updatePlacesVisibility();
 }
 
+function renderSelectedAura(place) {
+  highlightLayer.innerHTML = "";
+
+  if (!place.outline || !place.outline.length) {
+    return;
+  }
+
+  const imageWidth = mapImage.naturalWidth;
+  const imageHeight = mapImage.naturalHeight;
+
+  const points = place.outline
+    .map((point) => {
+      const x = (point.xPercent / 100) * imageWidth;
+      const y = (point.yPercent / 100) * imageHeight;
+
+      return `${x},${y}`;
+    })
+    .join(" ");
+
+  const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+
+  polygon.setAttribute("points", points);
+  polygon.classList.add("selected-area", `area-${place.type}`);
+
+  highlightLayer.appendChild(polygon);
+}
+
+function clearSelectedAura() {
+  highlightLayer.innerHTML = "";
+}
+
 function openPlaceCard(place) {
+  renderSelectedAura(place);
+
   placeType.textContent = place.typeLabel || place.type;
   placeName.textContent = place.name;
   placeDistrict.textContent = place.district;
@@ -249,6 +299,7 @@ function openPlaceCard(place) {
 
 function closePlaceCard() {
   placeCard.classList.add("is-hidden");
+  clearSelectedAura();
 }
 
 function togglePlacementMode() {
@@ -371,6 +422,8 @@ function renderPlacesList() {
 }
 
 function focusPlace(place) {
+  smoothness = focusSmoothness;
+
   const imageWidth = mapImage.naturalWidth;
   const imageHeight = mapImage.naturalHeight;
 
