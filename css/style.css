@@ -1059,3 +1059,71 @@ body {
 .category-sante {
   background: #2b9d58;
 }
+
+/* Aura / contour sélectionné */
+
+.highlight-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 3;
+}
+
+.markers-layer {
+  z-index: 4;
+}
+
+.selected-area {
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+
+  opacity: 1;
+
+  animation: selectedAreaPulse 2.4s ease-in-out infinite;
+}
+
+/* Couleurs selon le type */
+
+.selected-area.area-commerce {
+  stroke: rgba(225, 161, 31, 0.95);
+  fill: rgba(225, 161, 31, 0.12);
+  filter: drop-shadow(0 0 5px rgba(225, 161, 31, 0.45));
+}
+
+.selected-area.area-institution {
+  stroke: rgba(217, 54, 54, 0.95);
+  fill: rgba(217, 54, 54, 0.12);
+  filter: drop-shadow(0 0 5px rgba(217, 54, 54, 0.45));
+}
+
+.selected-area.area-divertissement {
+  stroke: rgba(47, 111, 214, 0.95);
+  fill: rgba(47, 111, 214, 0.12);
+  filter: drop-shadow(0 0 5px rgba(47, 111, 214, 0.45));
+}
+
+.selected-area.area-sante {
+  stroke: rgba(43, 157, 88, 0.95);
+  fill: rgba(43, 157, 88, 0.12);
+  filter: drop-shadow(0 0 5px rgba(43, 157, 88, 0.45));
+}
+
+@keyframes selectedAreaPulse {
+  0% {
+    fill-opacity: 0.12;
+    stroke-opacity: 0.75;
+  }
+
+  50% {
+    fill-opacity: 0.34;
+    stroke-opacity: 1;
+  }
+
+  100% {
+    fill-opacity: 0.12;
+    stroke-opacity: 0.75;
+  }
+}
