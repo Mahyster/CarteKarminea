@@ -25,6 +25,8 @@ const placesList = document.getElementById("placesList");
 const placesSearchInput = document.getElementById("placesSearch");
 const filterButtons = document.querySelectorAll(".filter-button");
 
+const visiblePlacesCount = document.getElementById("visiblePlacesCount");
+
 let currentScale = 1;
 let currentX = 0;
 let currentY = 0;
@@ -174,6 +176,17 @@ function renderPlaces() {
   updatePlacesVisibility();
 }
 
+function updateVisiblePlacesCount(count) {
+  if (!visiblePlacesCount) return;
+
+  if (count === 0) {
+    visiblePlacesCount.textContent = "Aucun lieu";
+    return;
+  }
+
+  visiblePlacesCount.textContent = count === 1 ? "1 lieu" : `${count} lieux`;
+}
+
 function updatePlacesVisibility() {
   let visibleCount = 0;
 
@@ -202,6 +215,7 @@ function updatePlacesVisibility() {
     const hasSearch = placesSearchQuery.trim().length > 0;
     emptySearchMessage.classList.toggle("is-hidden", visibleCount > 0 || !hasSearch);
   }
+updateVisiblePlacesCount(visibleCount);
 }
 
 function setActiveTypeFilter(filterValue) {
