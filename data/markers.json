@@ -9,9 +9,9 @@
     "minecraftX": "À renseigner",
     "minecraftZ": "À renseigner",
     "xPercent": 62,
-    "yPercent": 45   },
-
-    {
+    "yPercent": 45
+  },
+  {
     "id": "banque-karminea",
     "name": "Horace Bank",
     "type": "institution",
@@ -23,20 +23,19 @@
     "xPercent": 83.82,
     "yPercent": 48.32
   },
-
   {
     "id": "kopia_boite",
     "name": "Kopia Boîte de nuit",
     "type": "divertissement",
-    "typeLabel": "Divertisement",
+    "typeLabel": "Divertissement",
     "district": "Centre-ville",
     "description": "Filière discothèque de Kopia",
     "minecraftX": "À renseigner",
     "minecraftZ": "À renseigner",
     "xPercent": 68.44,
-    "yPercent": 39.47   },
-
-    {
+    "yPercent": 39.47
+  },
+  {
     "id": "relais_cartographe",
     "name": "Cartes&Co",
     "type": "commerce",
@@ -46,9 +45,9 @@
     "minecraftX": "À renseigner",
     "minecraftZ": "À renseigner",
     "xPercent": 62.43,
-    "yPercent": 48.05   },
-
-    {
+    "yPercent": 48.05
+  },
+  {
     "id": "hopital",
     "name": "Hôpital de Karminéa",
     "type": "sante",
@@ -58,9 +57,9 @@
     "minecraftX": "À renseigner",
     "minecraftZ": "À renseigner",
     "xPercent": 64.88,
-    "yPercent": 35.94   },
-
-    {
+    "yPercent": 35.94
+  },
+  {
     "id": "fisc",
     "name": "FISC",
     "type": "institution",
@@ -70,21 +69,31 @@
     "minecraftX": "À renseigner",
     "minecraftZ": "À renseigner",
     "xPercent": 72.24,
-    "yPercent": 25.09  },
-
-    {
-    "id": "mairie",
-    "name": "Hôtel de ville",
-    "type": "institution",
-    "typeLabel": "Institution",
-    "district": "Centre-ville",
-    "description": "Hôtel de ville de Karminéa",
-    "minecraftX": "À renseigner",
-    "minecraftZ": "À renseigner",
-    "xPercent": 73.11,
-    "yPercent": 57.07   },
-
-    {
+    "yPercent": 25.09
+  },
+  {
+  "id": "mairie",
+  "name": "Hôtel de ville",
+  "type": "institution",
+  "typeLabel": "Institution",
+  "district": "Centre-ville",
+  "description": "Hôtel de ville de Karminéa",
+  "minecraftX": "À renseigner",
+  "minecraftZ": "À renseigner",
+  "xPercent": 73.11,
+  "yPercent": 57.07,
+  "outline": [
+    { "xPercent": 69.53, "yPercent": 58.25 },
+    { "xPercent": 69.53, "yPercent": 55.81 },
+    { "xPercent": 71.69, "yPercent": 55.81 },
+    { "xPercent": 71.6, "yPercent": 55.19 },
+    { "xPercent": 74.4, "yPercent": 55.19 },
+    { "xPercent": 74.4, "yPercent": 55.85 },
+    { "xPercent": 76.62, "yPercent": 55.89 },
+    { "xPercent": 76.62, "yPercent": 58.25 }
+  ]
+},
+  {
     "id": "kopia_banner",
     "name": "Kopia Atelier bannières et drapeaux",
     "type": "commerce",
@@ -94,21 +103,21 @@
     "minecraftX": "À renseigner",
     "minecraftZ": "À renseigner",
     "xPercent": 66.39,
-    "yPercent": 41.32   },
-
-    {
+    "yPercent": 41.32
+  },
+  {
     "id": "ecurie_dupre",
-    "name": "Ecurie 2 luxe",
+    "name": "Écurie 2 luxe",
     "type": "commerce",
     "typeLabel": "Commerce",
     "district": "Centre-ville",
-    "description": "Ecurie tenue par Julien Dupré, vente de chevaux de luxe, entrainés et 'bien branlés' comme dirait le propriétaire des lieux",
+    "description": "Écurie tenue par Julien Dupré, vente de chevaux de luxe, entraînés et 'bien branlés' comme dirait le propriétaire des lieux",
     "minecraftX": "À renseigner",
     "minecraftZ": "À renseigner",
     "xPercent": 63.49,
-    "yPercent": 50.13   },
-
-    {
+    "yPercent": 50.13
+  },
+  {
     "id": "police_post",
     "name": "Poste de police",
     "type": "institution",
@@ -118,33 +127,33 @@
     "minecraftX": "À renseigner",
     "minecraftZ": "À renseigner",
     "xPercent": 52.59,
-    "yPercent": 53.62   },
-
-    {
+    "yPercent": 53.62
+  },
+  {
     "id": "playtwo_studio",
     "name": "Play Two Studio",
     "type": "divertissement",
-    "typeLabel": "Divertisement",
+    "typeLabel": "Divertissement",
     "district": "Centre-ville",
     "description": "Entreprise de production. Organisation d'événements, communication, label de musique officiel 'Play Two Records'",
     "minecraftX": "À renseigner",
     "minecraftZ": "À renseigner",
     "xPercent": 70.86,
-    "yPercent": 66.25   },
-
-    {
+    "yPercent": 66.25
+  },
+  {
     "id": "sluje_business",
     "name": "Boutique de Monsieur Golden Sluje",
     "type": "commerce",
     "typeLabel": "Commerce",
     "district": "Sur la côte",
-    "description": "Vente de parapluies, 5 modèles disponibles : Blanc, noir, rose, violet et vert",
+    "description": "Vente de parapluies, 5 modèles disponibles : blanc, noir, rose, violet et vert",
     "minecraftX": "433",
     "minecraftZ": "-249",
     "xPercent": 97.41,
-    "yPercent": 50.57   },
-
-    {
+    "yPercent": 50.57
+  },
+  {
     "id": "boulangerie",
     "name": "Boulangerie",
     "type": "commerce",
@@ -154,9 +163,9 @@
     "minecraftX": "À renseigner",
     "minecraftZ": "À renseigner",
     "xPercent": 62.74,
-    "yPercent": 54.96   },
-
-    {
+    "yPercent": 54.96
+  },
+  {
     "id": "kfc",
     "name": "KFC",
     "type": "commerce",
@@ -166,19 +175,18 @@
     "minecraftX": "À renseigner",
     "minecraftZ": "À renseigner",
     "xPercent": 57.68,
-    "yPercent": 55.13   },
-
-    {
+    "yPercent": 55.13
+  },
+  {
     "id": "casino_montecarlo",
     "name": "Casino Montecarlo",
     "type": "divertissement",
-    "typeLabel": "Divertisement",
+    "typeLabel": "Divertissement",
     "district": "Île du parlement",
     "description": "Casino bâti et dirigé par Monsieur Montecarlo et sa famille",
     "minecraftX": "À renseigner",
     "minecraftZ": "À renseigner",
     "xPercent": 31.63,
-    "yPercent": 71.13   }
-
-
+    "yPercent": 71.13
+  }
 ]
