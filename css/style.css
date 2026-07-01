@@ -180,38 +180,50 @@ body {
   top: 0;
   left: 0;
   pointer-events: none;
+
+  --marker-scale: 1;
 }
 
 .map-marker {
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   padding: 0;
+
   border: 2px solid rgba(116, 33, 28, 0.9);
   border-radius: 50%;
-  background:
-    radial-gradient(circle, #fff8d8 0%, #ffd36a 45%, #b8322b 100%);
-  box-shadow:
-  0 0 0 3px rgba(255, 215, 110, 0.22),
-  0 0 12px rgba(184, 50, 43, 0.38);
-  transform: translate(-50%, -50%);
+
+  transform: translate3d(-50%, -50%, 0) scale(var(--marker-scale));
+  transform-origin: center;
+
   cursor: pointer;
   pointer-events: auto;
+
+  will-change: transform, opacity, box-shadow;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+
   transition:
-    transform 0.2s ease,
+    opacity 0.22s ease,
     box-shadow 0.2s ease,
     filter 0.2s ease;
-  z-index: 5;
 }
 
 .map-marker::before {
   content: "";
   position: absolute;
-  inset: -5px;
+  inset: -6px;
+
   border-radius: 50%;
-  border: 2px solid rgba(255, 216, 120, 0.5);
+  border: 2px solid rgba(255, 216, 120, 0.55);
+
   opacity: 0;
   transform: scale(0.75);
+  transform-origin: center;
+
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+
   transition:
     opacity 0.2s ease,
     transform 0.2s ease;
@@ -222,40 +234,56 @@ body {
   position: absolute;
   left: 50%;
   bottom: 20px;
-  transform: translateX(-50%) translateY(4px);
+
+  transform: translate3d(-50%, 4px, 0);
+  transform-origin: center bottom;
+
   white-space: nowrap;
+
   padding: 4px 8px;
   border-radius: 999px;
+
   background: rgba(255, 244, 211, 0.96);
   border: 1px solid rgba(143, 35, 30, 0.4);
+
   color: #74211c;
   font-size: 11px;
   font-weight: 700;
+
   box-shadow: 0 5px 14px rgba(94, 48, 16, 0.2);
+
   opacity: 0;
   pointer-events: none;
+
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+
   transition:
     opacity 0.2s ease,
     transform 0.2s ease;
 }
 
 .map-marker:hover {
-  transform: translate(-50%, -50%) scale(1.5);
-  filter: brightness(1.12);
-  box-shadow:
-  0 0 0 5px rgba(255, 215, 110, 0.32),
-  0 0 20px rgba(184, 50, 43, 0.55);
+  transform: translate3d(-50%, -50%, 0) scale(var(--marker-scale));
+  filter: none;
   z-index: 10;
 }
 
 .map-marker:hover::before {
   opacity: 1;
-  transform: scale(1.1);
+  transform: scale(1.25);
 }
 
 .map-marker:hover::after {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  transform: translate3d(-50%, 0, 0);
+}
+
+.map-marker.is-hidden {
+  opacity: 0;
+  transform: translate3d(-50%, -50%, 0) scale(var(--marker-scale)) scale(0.75);
+  pointer-events: none;
 }
 
 /* Fiche lieu */
@@ -849,4 +877,185 @@ body {
   color: rgba(59, 36, 20, 0.7);
   font-size: 12px;
   font-weight: 700;
+}
+
+/* Catégorie Santé */
+
+.map-marker.marker-sante {
+  border-color: rgba(38, 135, 78, 0.95);
+  background:
+    radial-gradient(circle, #effff4 0%, #67d98f 46%, #2b9d58 100%);
+  box-shadow:
+    0 0 0 3px rgba(103, 217, 143, 0.24),
+    0 0 12px rgba(43, 157, 88, 0.42);
+}
+
+.map-marker.marker-sante:hover {
+  box-shadow:
+    0 0 0 5px rgba(103, 217, 143, 0.34),
+    0 0 20px rgba(43, 157, 88, 0.58);
+}
+
+.place-list-item.list-sante {
+  border-left-color: #2b9d58;
+}
+
+.filter-sante.is-active {
+  background: linear-gradient(135deg, #2b9d58, #67d98f);
+}
+
+/* Filtres multi-catégories dans Explorer */
+
+.filter-button.category-control {
+  opacity: 0.55;
+}
+
+.filter-button.category-control.is-active {
+  opacity: 1;
+}
+
+/* Panneau catégories compact sur la carte */
+
+.map-category-panel {
+  position: absolute;
+  top: 22px;
+  right: 26px;
+  z-index: 24;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  min-width: 205px;
+  padding: 13px;
+
+  border: 1px solid rgba(143, 35, 30, 0.2);
+  border-radius: 16px;
+
+  background:
+    linear-gradient(180deg, rgba(255, 252, 238, 0.94), rgba(246, 218, 153, 0.9));
+
+  box-shadow:
+    0 10px 28px rgba(88, 48, 16, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+
+  backdrop-filter: blur(6px);
+
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+}
+
+.map-category-panel.is-hidden {
+  opacity: 0;
+  transform: translateX(12px);
+  pointer-events: none;
+}
+
+.map-category-panel p {
+  margin: 0 0 4px;
+
+  color: rgba(59, 36, 20, 0.68);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.map-category-check {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  width: 100%;
+  padding: 8px 10px;
+
+  border: 1px solid rgba(143, 35, 30, 0.18);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 248, 0.58);
+  color: rgba(59, 36, 20, 0.62);
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  opacity: 0.58;
+
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.map-category-check:hover {
+  transform: translateX(-2px);
+  opacity: 0.85;
+  background: rgba(255, 255, 252, 0.88);
+}
+
+.map-category-check.is-active {
+  opacity: 1;
+  color: #3b2414;
+  background: rgba(255, 255, 252, 0.95);
+  box-shadow: 0 5px 14px rgba(88, 48, 16, 0.12);
+}
+
+.check-box {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+
+  border: 2px solid rgba(143, 35, 30, 0.32);
+  border-radius: 5px;
+
+  background: rgba(255, 255, 255, 0.7);
+
+  position: relative;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.map-category-check.is-active .check-box {
+  background: linear-gradient(135deg, #8d241e, #d74b3f);
+  border-color: rgba(116, 33, 28, 0.75);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.35),
+    0 0 0 3px rgba(143, 35, 30, 0.12);
+}
+
+.category-dot {
+  width: 11px;
+  height: 11px;
+  flex: 0 0 11px;
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.55),
+    0 0 8px rgba(0, 0, 0, 0.12);
+}
+
+.category-commerce {
+  background: #e1a11f;
+}
+
+.category-institution {
+  background: #9f1f1f;
+}
+
+.category-divertissement {
+  background: #2f6fd6;
+}
+
+.category-sante {
+  background: #2b9d58;
 }
