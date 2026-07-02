@@ -16,15 +16,40 @@
 
       <div>
         <h1>Atlas Officiel de Karminéa</h1>
-        <p>N'hésitez pas à faire des remarques pour me permettre d'améliorer l'expérience de cartographie.</p>
+        <p>Atlas dressé par Cartes&Co — vos remarques permettent d’améliorer l’expérience.</p>
       </div>
     </div>
 
-    <div class="map-controls">
-      <button id="togglePlacement">Mode placement</button>
-      <button id="zoomOut">−</button>
-      <button id="resetView">Recentrer</button>
-      <button id="zoomIn">+</button>
+    <div class="topbar-actions">
+      <div class="quick-actions">
+        <button
+  id="newsButton"
+  class="quick-action-button quick-action-news"
+  type="button"
+  title="Nouveautés"
+  aria-label="Nouveautés"
+>
+  <span class="quick-action-icon">✦</span>
+  <span class="quick-action-label">Nouveautés</span>
+</button>
+
+        <button
+          id="helpButton"
+          class="quick-action-button"
+          type="button"
+          title="Aide"
+          aria-label="Aide"
+        >
+          ?
+        </button>
+      </div>
+
+      <div class="map-controls">
+        <button id="togglePlacement">Mode placement</button>
+        <button id="zoomOut">−</button>
+        <button id="resetView">Recentrer</button>
+        <button id="zoomIn">+</button>
+      </div>
     </div>
   </header>
 
@@ -107,84 +132,404 @@
       <div id="mapViewport" class="map-viewport">
         <div id="mapLayer" class="map-layer">
           <img
-             id="mapImage"
-             class="map-image"
-             src="images/map.png"
-             alt="Carte de Karminéa"
-             draggable="false"
-/>
+            id="mapImage"
+            class="map-image"
+            src="images/map.png"
+            alt="Carte de Karminéa"
+            draggable="false"
+          />
 
-<svg id="highlightLayer" class="highlight-layer" aria-hidden="true"></svg>
+          <svg id="featureLayer" class="feature-layer" aria-hidden="true"></svg>
 
-<div id="markersLayer" class="markers-layer"></div>
+          <svg id="highlightLayer" class="highlight-layer" aria-hidden="true"></svg>
+
+          <div id="markersLayer" class="markers-layer"></div>
         </div>
       </div>
 
       <aside id="placeCard" class="place-card is-hidden">
         <button id="closePlaceCard" class="place-card-close">×</button>
 
-        <p id="placeType" class="place-type">Lieu</p>
+        <div class="place-card-header">
+          <span id="placeType" class="place-type">Lieu</span>
+          <span id="placeCategoryDot" class="place-category-dot"></span>
+        </div>
+
         <h2 id="placeName">Nom du lieu</h2>
-        <p id="placeDistrict" class="place-district">Quartier</p>
+
+        <div class="place-meta">
+          <div class="place-meta-item">
+            <span>Quartier</span>
+            <strong id="placeDistrict">Quartier</strong>
+          </div>
+        </div>
+
         <p id="placeDescription" class="place-description">Description du lieu.</p>
-        <p id="placeCoords" class="place-coords">Coordonnées : inconnues</p>
+
+        <div class="place-coords-row">
+          <p id="placeCoords" class="place-coords">Coordonnées : inconnues</p>
+          <button id="copyCoordsButton" class="copy-coords-button" type="button">
+            Copier
+          </button>
+        </div>
+      </aside>
+
+      <aside id="featureCard" class="feature-card is-hidden">
+        <button id="closeFeatureCard" class="feature-card-close">×</button>
+
+        <p id="featureType" class="feature-type">Type</p>
+        <h2 id="featureName">Nom</h2>
+
+        <div class="feature-meta">
+          <span>Architecture</span>
+          <strong id="featureArchitecture">Type d’architecture</strong>
+        </div>
+
+        <p id="featureDescription" class="feature-description">Description.</p>
       </aside>
 
       <div id="placementHelper" class="placement-helper is-hidden">
         <strong>Mode placement actif</strong>
-        <span>Clique sur la carte pour récupérer la position du point.</span>
-        <code id="placementCoords">Aucune position sélectionnée</code>
+        <span>Clique pour copier la position du point.</span>
+      </div>
+
+      <div id="placementCursor" class="placement-cursor is-hidden">
+        <span>Position</span>
+        <code id="placementCoords">xPercent: -- / yPercent: --</code>
       </div>
 
       <div id="mapCategoryPanel" class="map-category-panel">
-        <p>Catégories visibles</p>
+        <div class="category-panel-header">
+          <p>Catégories visibles</p>
 
-        <button
-          class="map-category-check category-control is-active"
-          type="button"
-          data-category="commerce"
-          aria-pressed="true"
-        >
-          <span class="check-box"></span>
-          <span class="category-dot category-commerce"></span>
-          Commerce
+          <div class="category-switcher">
+            <button id="categoryPrev" class="category-switch-button" type="button">‹</button>
+            <strong id="categoryPanelTitle">Lieux</strong>
+            <button id="categoryNext" class="category-switch-button" type="button">›</button>
+          </div>
+        </div>
+
+        <div id="placesCategoryPage" class="category-page is-active">
+          <button
+            id="togglePlacesLayer"
+            class="map-category-check is-active"
+            type="button"
+            aria-pressed="true"
+          >
+            <span class="check-box"></span>
+            <span class="category-dot category-lieux"></span>
+            Tous les lieux
+          </button>
+
+          <button
+            class="map-category-check category-control is-active"
+            type="button"
+            data-category="commerce"
+            aria-pressed="true"
+          >
+            <span class="check-box"></span>
+            <span class="category-dot category-commerce"></span>
+            Commerce
+          </button>
+
+          <button
+            class="map-category-check category-control is-active"
+            type="button"
+            data-category="institution"
+            aria-pressed="true"
+          >
+            <span class="check-box"></span>
+            <span class="category-dot category-institution"></span>
+            Institution
+          </button>
+
+          <button
+            class="map-category-check category-control is-active"
+            type="button"
+            data-category="divertissement"
+            aria-pressed="true"
+          >
+            <span class="check-box"></span>
+            <span class="category-dot category-divertissement"></span>
+            Divertissement
+          </button>
+
+          <button
+            class="map-category-check category-control is-active"
+            type="button"
+            data-category="sante"
+            aria-pressed="true"
+          >
+            <span class="check-box"></span>
+            <span class="category-dot category-sante"></span>
+            Santé
+          </button>
+        </div>
+
+        <div id="featuresCategoryPage" class="category-page">
+          <button
+            class="map-category-check feature-control is-active"
+            type="button"
+            data-feature-category="voirie"
+            aria-pressed="true"
+          >
+            <span class="check-box"></span>
+            <span class="category-dot category-voirie"></span>
+            Voirie
+          </button>
+
+          <button
+            class="map-category-check feature-control is-active"
+            type="button"
+            data-feature-category="pont"
+            aria-pressed="true"
+          >
+            <span class="check-box"></span>
+            <span class="category-dot category-pont"></span>
+            Pont
+          </button>
+
+          <button
+            class="map-category-check feature-control is-active"
+            type="button"
+            data-feature-category="ocean"
+            aria-pressed="true"
+          >
+            <span class="check-box"></span>
+            <span class="category-dot category-ocean"></span>
+            Océan
+          </button>
+
+          <button
+            class="map-category-check feature-control is-active"
+            type="button"
+            data-feature-category="quartier"
+            aria-pressed="true"
+          >
+            <span class="check-box"></span>
+            <span class="category-dot category-quartier"></span>
+            Quartier
+          </button>
+
+          <button
+            class="map-category-check feature-control is-active"
+            type="button"
+            data-feature-category="place"
+            aria-pressed="true"
+          >
+            <span class="check-box"></span>
+            <span class="category-dot category-place"></span>
+            Place
+          </button>
+        </div>
+      </div>
+
+      <div id="toolsWidget" class="tools-widget">
+        <button id="toggleToolsMenu" class="tools-toggle" type="button" aria-expanded="false">
+          <span class="tools-icon">⚙</span>
+          <span>En dev...</span>
         </button>
 
-        <button
-          class="map-category-check category-control is-active"
-          type="button"
-          data-category="institution"
-          aria-pressed="true"
-        >
-          <span class="check-box"></span>
-          <span class="category-dot category-institution"></span>
-          Institution
-        </button>
+        <div id="toolsMenu" class="tools-menu is-hidden">
+          <button class="tools-menu-item" type="button">
+            <span class="tools-menu-icon">★</span>
+            <span>
+              <strong>Favoris</strong>
+              <small>Retrouver vos lieux importants</small>
+            </span>
+          </button>
 
-        <button
-          class="map-category-check category-control is-active"
-          type="button"
-          data-category="divertissement"
-          aria-pressed="true"
-        >
-          <span class="check-box"></span>
-          <span class="category-dot category-divertissement"></span>
-          Divertissement
-        </button>
+          <button class="tools-menu-item" type="button">
+            <span class="tools-menu-icon">⌖</span>
+            <span>
+              <strong>Me localiser</strong>
+              <small>Afficher votre position sur la carte</small>
+            </span>
+          </button>
 
-        <button
-          class="map-category-check category-control is-active"
-          type="button"
-          data-category="sante"
-          aria-pressed="true"
-        >
-          <span class="check-box"></span>
-          <span class="category-dot category-sante"></span>
-          Santé
-        </button>
+          <button class="tools-menu-item" type="button">
+            <span class="tools-menu-icon">➤</span>
+            <span>
+              <strong>Parcours utiles</strong>
+              <small>Trouver un lieu selon votre besoin</small>
+            </span>
+          </button>
+        </div>
       </div>
     </section>
   </main>
+
+  <div id="newsPanel" class="news-panel is-hidden">
+    <div class="news-panel-header">
+      <div>
+        <p>Nouveautés</p>
+        <h2>Dernières évolutions de l’Atlas</h2>
+      </div>
+
+      <button id="closeNewsPanel" class="news-panel-close" type="button">×</button>
+    </div>
+
+    <div class="news-list">
+      <article class="news-item is-highlighted">
+        <span class="news-date">Juillet 2026</span>
+        <h3>Nouvelle interface de carte</h3>
+        <p>
+          Ajout des calques, du panneau Explorer, des éléments de carte interactifs
+          et des premiers outils de navigation.
+        </p>
+      </article>
+
+      <article class="news-item">
+        <span class="news-date">Dernier ajout</span>
+        <h3>Éléments de carte</h3>
+        <p>
+          Les ponts, voiries, océans, quartiers et places peuvent désormais être
+          affichés sans marqueur visible, avec une fiche dédiée au clic.
+        </p>
+      </article>
+
+      <article class="news-item">
+  <span class="news-date">Prochaines mises à jour</span>
+  <h3>Ce qui arrive bientôt</h3>
+
+  <ul class="news-bullets">
+    <li>
+      Mise à jour de la carte officielle dès la fin de sa conception.
+    </li>
+
+    <li>
+      Nommage des rues, quartiers, mers et autres lieux en cours, avec une mise
+      à jour progressive au fil du temps.
+    </li>
+
+    <li>
+      Ajout de tracés autour des bâtiments lorsqu’un marqueur est sélectionné.
+      Disponible uniquement pour l’Hôtel de Ville pour le moment.
+    </li>
+
+    <li>
+      Ajout progressif de photos des bâtiments dans les fiches descriptives.
+      N’hésitez pas à envoyer vos plus belles photos.
+    </li>
+  </ul>
+</article>
+    </div>
+  </div>
+
+  <div id="helpPanel" class="help-panel is-hidden">
+    <div class="help-panel-header">
+      <div>
+        <p>Aide rapide</p>
+        <h2>Comment utiliser l’Atlas ?</h2>
+      </div>
+
+      <button id="closeHelpPanel" class="help-panel-close" type="button">×</button>
+    </div>
+
+    <div class="help-list">
+      <article class="help-item">
+        <span class="help-icon">🖱️</span>
+        <div>
+          <h3>Déplacer la carte</h3>
+          <p>
+            Maintiens le clic gauche sur la carte puis déplace ta souris pour naviguer.
+          </p>
+        </div>
+      </article>
+
+      <article class="help-item">
+        <span class="help-icon">＋</span>
+        <div>
+          <h3>Zoomer et recentrer</h3>
+          <p>
+            Utilise la molette de la souris ou les boutons −, + et Recentrer dans la barre du haut.
+          </p>
+        </div>
+      </article>
+
+      <article class="help-item">
+        <span class="help-icon">☰</span>
+        <div>
+          <h3>Explorer les lieux</h3>
+          <p>
+            Ouvre l’onglet Explorer à gauche pour rechercher un commerce, une institution,
+            un quartier ou un lieu précis.
+          </p>
+        </div>
+      </article>
+
+      <article class="help-item">
+        <span class="help-icon">◎</span>
+        <div>
+          <h3>Afficher les calques</h3>
+          <p>
+            Le panneau en haut à droite permet d’afficher ou masquer les lieux,
+            les ponts, les routes, les océans, les quartiers et les places.
+          </p>
+        </div>
+      </article>
+
+      <article class="help-item">
+        <span class="help-icon">✦</span>
+        <div>
+          <h3>Cliquer sur un élément</h3>
+          <p>
+            Clique sur un marqueur ou sur un élément de carte pour ouvrir sa fiche d’information.
+          </p>
+        </div>
+      </article>
+
+      <article class="help-item">
+        <span class="help-icon">⌖</span>
+        <div>
+          <h3>Mode placement</h3>
+          <p>
+            Active le mode placement pour récupérer facilement des coordonnées en pourcentage
+            sur la carte.
+          </p>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div id="welcomePanel" class="welcome-panel">
+  <div class="welcome-card">
+    <button id="closeWelcomePanel" class="welcome-close" type="button">×</button>
+
+    <p class="welcome-eyebrow">Atlas Officiel</p>
+    <h2>Bienvenue sur la carte officielle de Karminéa</h2>
+
+    <p>
+      Cette plateforme a pour but de faciliter l’exploration de Karminéa, de retrouver
+      les lieux importants, de consulter les quartiers, les ponts, les rues, les mers
+      et les différents points d’intérêt recensés sur la carte.
+    </p>
+
+    <p>
+      N’hésitez pas à parcourir les fonctionnalités disponibles : l’onglet
+      <strong>Explorer</strong>, les <strong>calques</strong>, les fiches descriptives,
+      l’<strong>aide</strong> et les <strong>nouveautés</strong>.
+    </p>
+
+    <p>
+      La plateforme est en constante amélioration. Si vous remarquez un bug, un souci
+      d’ergonomie, une limite, une erreur dans un descriptif,une piste d’amélioration,
+      ou bien même tout simplement si vous avez une idée de fonctionnalité, vous pouvez 
+      me contacter sur Discord :
+      <strong>@Mahyster</strong>. Je serai ravi d'échanger avec vous !
+    </p>
+
+    <p>
+      Pensez également à consulter régulièrement l’onglet
+      <strong>Nouveautés</strong> pour suivre les ajouts et les prochaines évolutions
+      de l’Atlas.
+    </p>
+
+    <button id="welcomeConfirmButton" class="welcome-confirm" type="button">
+      Découvrir l’Atlas
+    </button>
+  </div>
+</div>
 
   <script src="js/map.js"></script>
 </body>
