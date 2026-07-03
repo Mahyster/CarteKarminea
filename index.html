@@ -14,8 +14,50 @@
     <div class="brand">
       <div class="brand-icon">🗺️</div>
 
-      <div>
-        <h1>Atlas Officiel de Karminéa</h1>
+      <div class="brand-content">
+        <div class="brand-title-row">
+          <h1>Atlas Officiel de Karminéa</h1>
+
+          <div class="map-switcher">
+            <button
+              id="mapSwitcherButton"
+              class="map-switcher-button"
+              type="button"
+              aria-expanded="false"
+              aria-haspopup="true"
+            >
+              <span class="map-switcher-current">Carte de Karminéa</span>
+              <span class="map-switcher-arrow">⌄</span>
+            </button>
+
+            <div id="mapSwitcherMenu" class="map-switcher-menu is-hidden">
+              <button class="map-switcher-option is-active" type="button" aria-current="page">
+                <span>
+                  <strong>Carte de Karminéa</strong>
+                  <small>Carte actuellement disponible</small>
+                </span>
+                <em>Active</em>
+              </button>
+
+              <button class="map-switcher-option is-disabled" type="button" disabled>
+                <span>
+                  <strong>Carte de Médusa</strong>
+                  <small>Disponible prochainement</small>
+                </span>
+                <em>Bientôt</em>
+              </button>
+
+              <button class="map-switcher-option is-disabled" type="button" disabled>
+                <span>
+                  <strong>Carte de Kopia</strong>
+                  <small>Disponible prochainement</small>
+                </span>
+                <em>Bientôt</em>
+              </button>
+            </div>
+          </div>
+        </div>
+
         <p>Atlas dressé par Cartes&Co — vos remarques permettent d’améliorer l’expérience.</p>
       </div>
     </div>
@@ -24,13 +66,14 @@
       <div class="quick-actions">
         <button
   id="newsButton"
-  class="quick-action-button quick-action-news"
+  class="quick-action-button quick-action-news is-major-update"
   type="button"
-  title="Nouveautés"
-  aria-label="Nouveautés"
+  title="Nouveautés de la version majeure"
+  aria-label="Nouveautés de la version majeure"
 >
   <span class="quick-action-icon">✦</span>
   <span class="quick-action-label">Nouveautés</span>
+  <span class="quick-action-badge">V2</span>
 </button>
 
         <button
@@ -45,7 +88,7 @@
       </div>
 
       <div class="map-controls">
-        <button id="togglePlacement">Mode placement</button>
+        <button id="toggleCreation" class="creation-admin-only is-admin-hidden" type="button">Mode création</button>
         <button id="zoomOut">−</button>
         <button id="resetView">Recentrer</button>
         <button id="zoomIn">+</button>
@@ -64,63 +107,103 @@
         <button id="closeExplorer" class="explorer-close">×</button>
       </div>
 
-      <div class="explorer-section">
-        <div class="explorer-title-row">
-          <h3>Lieux recensés</h3>
-          <span id="visiblePlacesCount" class="visible-count">0 lieu</span>
+      
+
+      <div class="explorer-body">
+        <div class="explorer-mode-switch" role="tablist" aria-label="Sections de l’Explorer">
+          <button
+            class="explorer-mode-button is-active"
+            type="button"
+            data-explorer-page="places"
+            aria-pressed="true"
+          >
+            Lieux
+          </button>
+
+          <button
+            class="explorer-mode-button"
+            type="button"
+            data-explorer-page="features"
+            aria-pressed="false"
+          >
+            Éléments de carte
+          </button>
         </div>
 
         <div class="explorer-search">
           <input
             id="placesSearch"
             type="search"
-            placeholder="Rechercher un lieu, un type, un quartier..."
+            placeholder="Rechercher un lieu, une rue, un pont, un quartier..."
             autocomplete="off"
           />
         </div>
 
-        <div class="explorer-filters">
-          <button
-            class="filter-button category-control is-active filter-commerce"
-            type="button"
-            data-category="commerce"
-            aria-pressed="true"
-          >
-            Commerce
-          </button>
+        <div class="explorer-pages-viewport">
+          <div id="explorerPagesTrack" class="explorer-pages-track">
+            <div id="explorerPlacesPage" class="explorer-page is-active">
+              <div class="explorer-title-row">
+                <h3>Lieux recensés</h3>
+                <span id="visiblePlacesCount" class="visible-count">0 lieu</span>
+              </div>
 
-          <button
-            class="filter-button category-control is-active filter-institution"
-            type="button"
-            data-category="institution"
-            aria-pressed="true"
-          >
-            Institution
-          </button>
+              <div class="explorer-filters">
+                <button
+                  class="filter-button category-control is-active filter-commerce"
+                  type="button"
+                  data-category="commerce"
+                  aria-pressed="true"
+                >
+                  Commerce
+                </button>
 
-          <button
-            class="filter-button category-control is-active filter-divertissement"
-            type="button"
-            data-category="divertissement"
-            aria-pressed="true"
-          >
-            Divertissement
-          </button>
+                <button
+                  class="filter-button category-control is-active filter-institution"
+                  type="button"
+                  data-category="institution"
+                  aria-pressed="true"
+                >
+                  Institution
+                </button>
 
-          <button
-            class="filter-button category-control is-active filter-sante"
-            type="button"
-            data-category="sante"
-            aria-pressed="true"
-          >
-            Santé
-          </button>
-        </div>
+                <button
+                  class="filter-button category-control is-active filter-divertissement"
+                  type="button"
+                  data-category="divertissement"
+                  aria-pressed="true"
+                >
+                  Divertissement
+                </button>
 
-        <div id="placesList" class="places-list">
-          <p class="empty-list">Chargement des lieux...</p>
+                <button
+                  class="filter-button category-control is-active filter-sante"
+                  type="button"
+                  data-category="sante"
+                  aria-pressed="true"
+                >
+                  Santé
+                </button>
+              </div>
+
+              <div id="placesList" class="places-list">
+                <p class="empty-list">Chargement des lieux...</p>
+              </div>
+            </div>
+
+            <div id="explorerFeaturesPage" class="explorer-page">
+              <div class="explorer-title-row">
+                <h3>Éléments de carte</h3>
+                <span id="visibleFeaturesCount" class="visible-count">0 élément</span>
+              </div>
+
+              <div id="featuresList" class="features-list">
+                <p class="empty-list">Chargement des éléments...</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
     </aside>
 
     <button id="explorerTab" class="explorer-tab" type="button">
@@ -139,11 +222,18 @@
             draggable="false"
           />
 
-          <svg id="featureLayer" class="feature-layer" aria-hidden="true"></svg>
+          <svg id="creationLayer" class="creation-layer" aria-hidden="true"></svg>
 
           <svg id="highlightLayer" class="highlight-layer" aria-hidden="true"></svg>
 
           <div id="markersLayer" class="markers-layer"></div>
+        </div>
+
+        <svg id="featureLayer" class="feature-layer" aria-hidden="true"></svg>
+        <div id="featureLabelsLayer" class="feature-labels-layer" aria-hidden="true"></div>
+
+        <div id="coordinateTarget" class="coordinate-target is-hidden" aria-hidden="true">
+          <span></span>
         </div>
       </div>
 
@@ -187,16 +277,6 @@
 
         <p id="featureDescription" class="feature-description">Description.</p>
       </aside>
-
-      <div id="placementHelper" class="placement-helper is-hidden">
-        <strong>Mode placement actif</strong>
-        <span>Clique pour copier la position du point.</span>
-      </div>
-
-      <div id="placementCursor" class="placement-cursor is-hidden">
-        <span>Position</span>
-        <code id="placementCoords">xPercent: -- / yPercent: --</code>
-      </div>
 
       <div id="mapCategoryPanel" class="map-category-panel">
         <div class="category-panel-header">
@@ -326,28 +406,34 @@
 
       <div id="toolsWidget" class="tools-widget">
         <button id="toggleToolsMenu" class="tools-toggle" type="button" aria-expanded="false">
-          <span class="tools-icon">⚙</span>
-          <span>En dev...</span>
-        </button>
+  <span class="tools-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" class="tools-svg">
+      <path
+        d="M21.2 6.6a5.4 5.4 0 0 1-6.8 6.8L7.1 20.7a2.1 2.1 0 0 1-3-3l7.3-7.3a5.4 5.4 0 0 1 6.8-6.8l-3.1 3.1 2.9 2.9 3.2-3z"
+      />
+    </svg>
+  </span>
+  <span>Outils</span>
+</button>
 
         <div id="toolsMenu" class="tools-menu is-hidden">
           <button class="tools-menu-item" type="button">
             <span class="tools-menu-icon">★</span>
             <span>
-              <strong>Favoris</strong>
+              <strong>Favoris (en dev)</strong>
               <small>Retrouver vos lieux importants</small>
             </span>
           </button>
 
-          <button class="tools-menu-item" type="button">
+          <button id="openCoordinateTool" class="tools-menu-item" type="button">
             <span class="tools-menu-icon">⌖</span>
             <span>
-              <strong>Me localiser</strong>
-              <small>Afficher votre position sur la carte</small>
+              <strong>Aller à des coordonnées</strong>
+              <small>Entrer un X / Z Minecraft</small>
             </span>
           </button>
 
-          <button class="tools-menu-item" type="button">
+          <button id="openNeedsTool" class="tools-menu-item" type="button">
             <span class="tools-menu-icon">➤</span>
             <span>
               <strong>Parcours utiles</strong>
@@ -356,141 +442,567 @@
           </button>
         </div>
       </div>
+
+      <aside id="coordinateToolPanel" class="coordinate-tool-panel is-hidden">
+        <div class="coordinate-tool-header">
+          <div>
+            <p>Outil de navigation</p>
+            <h2>Aller à des coordonnées</h2>
+          </div>
+
+          <button id="closeCoordinateTool" class="coordinate-tool-close" type="button">×</button>
+        </div>
+
+        <p class="coordinate-tool-intro">
+          Entrez des coordonnées Minecraft pour centrer la carte sur une position précise.
+        </p>
+
+        <div class="coordinate-grid-two">
+          <div class="coordinate-field">
+            <label for="coordinateXInput">Coordonnée X</label>
+            <input id="coordinateXInput" type="number" placeholder="Ex : 120" />
+          </div>
+
+          <div class="coordinate-field">
+            <label for="coordinateZInput">Coordonnée Z</label>
+            <input id="coordinateZInput" type="number" placeholder="Ex : -240" />
+          </div>
+        </div>
+
+        <div class="coordinate-actions-row">
+          <button id="goToCoordinateButton" class="coordinate-main-button" type="button">
+            Aller à la position
+          </button>
+
+          <button id="clearCoordinateTargetButton" class="coordinate-secondary-button" type="button">
+            Effacer la cible
+          </button>
+        </div>
+
+        <button id="copyCoordinateLinkButton" class="coordinate-link-button" type="button">
+          Copier le lien de cette position
+        </button>
+
+        <p id="coordinateHoverText" class="coordinate-hover-text">
+          Survole la carte pour lire les coordonnées Minecraft.
+        </p>
+
+        <p id="coordinateToolStatus" class="coordinate-tool-status" aria-live="polite"></p>
+      </aside>
+
+      <aside id="needsToolPanel" class="needs-tool-panel is-hidden">
+        <div class="needs-tool-header">
+          <div>
+            <p>Parcours utiles</p>
+            <h2>Trouver un lieu</h2>
+          </div>
+
+          <button id="closeNeedsTool" class="needs-tool-close" type="button">×</button>
+        </div>
+
+        <p class="needs-tool-intro">
+          Choisissez votre besoin : l’Atlas vous propose les lieux correspondants déjà recensés.
+        </p>
+
+        <div class="needs-grid" role="list" aria-label="Besoins disponibles">
+          <button class="needs-choice-button need-commerce" type="button" data-need="commerce">
+            <span>🛒</span>
+            <strong>Acheter</strong>
+            <small>Commerces</small>
+          </button>
+
+          <button class="needs-choice-button need-institution" type="button" data-need="institution">
+            <span>⚖</span>
+            <strong>Démarches</strong>
+            <small>Institutions</small>
+          </button>
+
+          <button class="needs-choice-button need-sante" type="button" data-need="sante">
+            <span>✚</span>
+            <strong>Se soigner</strong>
+            <small>Santé</small>
+          </button>
+
+          <button class="needs-choice-button need-divertissement" type="button" data-need="divertissement">
+            <span>✦</span>
+            <strong>Se divertir</strong>
+            <small>Divertissement</small>
+          </button>
+        </div>
+
+        <div class="needs-results-header">
+          <strong id="needsResultsTitle">Choisissez un besoin</strong>
+          <span id="needsResultsCount">0 lieu</span>
+        </div>
+
+        <div id="needsResultsList" class="needs-results-list">
+          <p class="needs-empty-message">
+            Sélectionnez une catégorie pour afficher les lieux utiles correspondants.
+          </p>
+        </div>
+
+        <p id="needsToolStatus" class="needs-tool-status" aria-live="polite"></p>
+      </aside>
+
+      <button id="feedbackTab" class="feedback-tab" type="button">
+        <span class="feedback-tab-icon">✎</span>
+        <span class="feedback-tab-text">Remarque</span>
+      </button>
+
+      <aside id="feedbackPanel" class="feedback-panel is-hidden">
+        <div class="feedback-panel-header">
+          <div>
+            <p>Retour Atlas</p>
+            <h2>Effectuer une remarque</h2>
+          </div>
+
+          <button id="closeFeedbackPanel" class="feedback-close" type="button">×</button>
+        </div>
+
+        <p class="feedback-intro">
+          Signalez un bug, proposez une idée ou indiquez une correction à apporter.
+          Pensez à préciser le lieu concerné directement dans la description si besoin.
+        </p>
+
+        <div class="feedback-field">
+          <label for="feedbackTitle">Titre du ticket</label>
+          <input id="feedbackTitle" type="text" placeholder="Ex : Erreur sur le nom d’une rue" />
+        </div>
+
+        <div class="feedback-field">
+          <label for="feedbackCategory">Catégorie</label>
+          <select id="feedbackCategory">
+            <option value="Bug">Bug</option>
+            <option value="Idée">Idée</option>
+            <option value="Problème de description">Problème de description</option>
+            <option value="Problème de position ou de tracé">Problème de position ou de tracé</option>
+            <option value="Lieu manquant">Lieu manquant</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+
+        <div class="feedback-field">
+          <label for="feedbackDescription">Description</label>
+          <textarea id="feedbackDescription" rows="6" placeholder="Décris ta remarque ici. Exemple : le lieu concerné, le problème constaté, ou l’idée proposée."></textarea>
+        </div>
+
+        <button id="copyFeedbackButton" class="feedback-copy-button" type="button">
+          Copier le message Discord
+        </button>
+
+        <p id="feedbackStatus" class="feedback-status" aria-live="polite"></p>
+      </aside>
+
+      <aside id="creationPanel" class="creation-panel is-hidden creation-admin-only is-admin-hidden">
+        <div class="creation-panel-header">
+          <div>
+            <p>Mode création</p>
+            <h2>Générateur JSON</h2>
+          </div>
+
+          <button id="closeCreationPanel" class="creation-close" type="button">×</button>
+        </div>
+
+        <div class="creation-tabs">
+          <button id="creationPlaceTab" class="creation-tab is-active" type="button">
+            Lieu
+          </button>
+
+          <button id="creationFeatureTab" class="creation-tab" type="button">
+            Élément de carte
+          </button>
+        </div>
+
+        <label class="creation-clean-toggle">
+          <input id="creationCleanMode" type="checkbox" checked />
+          <span>
+            <strong>Vue épurée</strong>
+            <small>Masque les marqueurs et tracés existants pendant la création.</small>
+          </span>
+        </label>
+
+        <div id="creationPlacePage" class="creation-page is-active">
+          <div class="creation-field">
+            <label for="creationPlaceName">Nom du lieu</label>
+            <input id="creationPlaceName" type="text" placeholder="Ex : Cartes&Co" />
+          </div>
+
+          <div class="creation-grid-two">
+            <div class="creation-field">
+              <label for="creationPlaceType">Type</label>
+              <select id="creationPlaceType">
+                <option value="commerce">Commerce</option>
+                <option value="institution">Institution</option>
+                <option value="divertissement">Divertissement</option>
+                <option value="sante">Santé</option>
+              </select>
+            </div>
+
+            <div class="creation-field">
+              <label for="creationPlaceDistrict">Quartier</label>
+              <input id="creationPlaceDistrict" type="text" placeholder="Ex : Centre-ville" />
+            </div>
+          </div>
+
+          <div class="creation-grid-two">
+            <div class="creation-field">
+              <label for="creationPlaceMinecraftX">Coordonnée X</label>
+              <input id="creationPlaceMinecraftX" type="number" placeholder="Ex : 433" />
+            </div>
+
+            <div class="creation-field">
+              <label for="creationPlaceMinecraftZ">Coordonnée Z</label>
+              <input id="creationPlaceMinecraftZ" type="number" placeholder="Ex : -249" />
+            </div>
+          </div>
+
+          <div class="creation-field">
+            <label for="creationPlaceDescription">Description</label>
+            <textarea id="creationPlaceDescription" rows="3" placeholder="Description courte du lieu."></textarea>
+          </div>
+
+          <div class="creation-position-box">
+            <strong>Position sur la carte</strong>
+            <span id="creationPlacePositionText">Clique sur la carte pour placer le marqueur.</span>
+          </div>
+
+          <div class="creation-actions-row">
+            <button id="resetCreationPlace" class="creation-secondary-button" type="button">
+              Réinitialiser le point
+            </button>
+
+            <button id="copyCreationPlaceJson" class="creation-main-button" type="button">
+              Copier le JSON
+            </button>
+          </div>
+
+          <textarea id="creationPlaceOutput" class="creation-output" rows="8" readonly placeholder="Le JSON markers.json apparaîtra ici."></textarea>
+        </div>
+
+        <div id="creationFeaturePage" class="creation-page">
+          <div class="creation-field">
+            <label for="creationFeatureName">Nom de l’élément</label>
+            <input id="creationFeatureName" type="text" placeholder="Ex : Quartier Claire Fontaine" />
+          </div>
+
+          <div class="creation-grid-two">
+            <div class="creation-field">
+              <label for="creationFeatureType">Type</label>
+              <select id="creationFeatureType">
+                <option value="voirie">Voirie</option>
+                <option value="pont">Pont</option>
+                <option value="ocean">Océan</option>
+                <option value="quartier">Quartier</option>
+                <option value="place">Place</option>
+              </select>
+            </div>
+
+            <div class="creation-field">
+              <label for="creationFeatureShape">Forme</label>
+              <select id="creationFeatureShape">
+                <option value="line">Ligne</option>
+                <option value="polygon">Zone</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="creation-grid-two">
+            <div class="creation-field">
+              <label for="creationFeatureArchitecture">Architecture</label>
+              <input id="creationFeatureArchitecture" type="text" placeholder="Ex : Zone urbaine" />
+            </div>
+
+            <div class="creation-field">
+              <label for="creationFeatureThickness">Épaisseur clic</label>
+              <input id="creationFeatureThickness" type="number" value="28" min="4" max="120" />
+            </div>
+          </div>
+
+          <div class="creation-field">
+            <label for="creationFeatureDescription">Description</label>
+            <textarea id="creationFeatureDescription" rows="3" placeholder="Description courte de l’élément."></textarea>
+          </div>
+
+          <div class="creation-position-box">
+            <strong>Points enregistrés</strong>
+            <span id="creationFeaturePointsText">Clique sur la carte pour ajouter des points.</span>
+          </div>
+
+          <div class="creation-actions-row">
+            <button id="undoCreationFeaturePoint" class="creation-secondary-button" type="button">
+              Annuler le dernier point
+            </button>
+
+            <button id="resetCreationFeature" class="creation-secondary-button" type="button">
+              Réinitialiser
+            </button>
+          </div>
+
+          <button id="copyCreationFeatureJson" class="creation-main-button full" type="button">
+            Copier le JSON features.json
+          </button>
+
+          <textarea id="creationFeatureOutput" class="creation-output" rows="9" readonly placeholder="Le JSON features.json apparaîtra ici."></textarea>
+        </div>
+      </aside>
+
     </section>
   </main>
 
   <div id="newsPanel" class="news-panel is-hidden">
     <div class="news-panel-header">
       <div>
-        <p>Nouveautés</p>
-        <h2>Dernières évolutions de l’Atlas</h2>
+        <p>Nouvelle version majeure</p>
+        <h2>Ce qui change dans l’Atlas</h2>
       </div>
 
       <button id="closeNewsPanel" class="news-panel-close" type="button">×</button>
     </div>
 
     <div class="news-list">
-      <article class="news-item is-highlighted">
-        <span class="news-date">Juillet 2026</span>
-        <h3>Nouvelle interface de carte</h3>
+      <article class="news-item is-highlighted news-version-card">
+        <div class="news-version-topline">
+          <span class="news-date">Version majeure — 3 juillet 2026</span>
+          <span class="news-version-badge">V2</span>
+        </div>
+
+        <h3>L’Atlas devient un véritable outil de navigation RP</h3>
         <p>
-          Ajout des calques, du panneau Explorer, des éléments de carte interactifs
-          et des premiers outils de navigation.
+          L’interface a été retravaillée pour mieux explorer Karminéa, retrouver les lieux utiles,
+          afficher les éléments de carte et guider les joueurs selon leurs besoins.
         </p>
       </article>
 
       <article class="news-item">
-        <span class="news-date">Dernier ajout</span>
-        <h3>Éléments de carte</h3>
+        <span class="news-date">Explorer</span>
+        <h3>Nouvel Explorer en deux sections</h3>
         <p>
-          Les ponts, voiries, océans, quartiers et places peuvent désormais être
-          affichés sans marqueur visible, avec une fiche dédiée au clic.
+          L’Explorer possède désormais deux onglets : Lieux et Éléments de carte. La recherche est
+          commune et permet de retrouver rapidement un commerce, une institution, une rue, un pont,
+          un quartier, une place ou une mer.
         </p>
       </article>
 
       <article class="news-item">
-  <span class="news-date">Prochaines mises à jour</span>
-  <h3>Ce qui arrive bientôt</h3>
+        <span class="news-date">Calques</span>
+        <h3>Affichage plus clair des catégories</h3>
+        <p>
+          Le panneau des calques permet d’afficher ou masquer les lieux, mais aussi les routes,
+          ponts, océans, quartiers et places. Chaque famille peut être gérée séparément.
+        </p>
+      </article>
 
-  <ul class="news-bullets">
-    <li>
-      Mise à jour de la carte officielle dès la fin de sa conception.
-    </li>
+      <article class="news-item">
+        <span class="news-date">Carte interactive</span>
+        <h3>Éléments de carte cliquables</h3>
+        <p>
+          Les routes, ponts, quartiers, places et mers peuvent maintenant avoir leur propre tracé,
+          leur nom au survol et une fiche descriptive dédiée au clic.
+        </p>
+      </article>
 
-    <li>
-      Nommage des rues, quartiers, mers et autres lieux en cours, avec une mise
-      à jour progressive au fil du temps.
-    </li>
+      <article class="news-item">
+        <span class="news-date">Outils</span>
+        <h3>Aller à des coordonnées Minecraft</h3>
+        <p>
+          L’outil de coordonnées permet d’entrer une position X / Z, de centrer la carte dessus,
+          d’afficher une cible et de copier un lien de partage. La cible disparaît proprement à la
+          fermeture de l’outil.
+        </p>
+      </article>
 
-    <li>
-      Ajout de tracés autour des bâtiments lorsqu’un marqueur est sélectionné.
-      Disponible uniquement pour l’Hôtel de Ville pour le moment.
-    </li>
+      <article class="news-item">
+        <span class="news-date">Nouveau</span>
+        <h3>Parcours utiles : trouver un lieu selon son besoin</h3>
+        <p>
+          Depuis le menu Outils, il est maintenant possible de chercher un lieu sans connaître son nom :
+          Acheter, faire des démarches, se soigner ou se divertir. Les résultats ouvrent directement la
+          fiche du lieu et centrent la carte.
+        </p>
+      </article>
 
-    <li>
-      Ajout progressif de photos des bâtiments dans les fiches descriptives.
-      N’hésitez pas à envoyer vos plus belles photos.
-    </li>
-  </ul>
-</article>
+      <article class="news-item">
+        <span class="news-date">Remarques</span>
+        <h3>Un panneau de retour plus simple</h3>
+        <p>
+          L’onglet Remarque permet de générer rapidement un message Discord pour signaler un bug,
+          proposer une idée, corriger une description ou demander l’ajout d’un lieu.
+        </p>
+      </article>
+
+      <article class="news-item">
+        <span class="news-date">Création</span>
+        <h3>Mode création réservé à l’édition</h3>
+        <p>
+          Le mode création est désormais masqué sur le lien public classique. Il apparaît uniquement avec
+          le paramètre dédié et permet de générer proprement le JSON des lieux et des éléments de carte.
+        </p>
+      </article>
+
+      <article class="news-item">
+        <span class="news-date">Navigation</span>
+        <h3>Sélecteur de cartes</h3>
+        <p>
+          Un volet déroulant a été ajouté dans l’en-tête pour préparer les futures cartes de Médusa et
+          Kopia. Pour le moment, seule la carte de Karminéa est active.
+        </p>
+      </article>
+
+      <article class="news-item">
+        <span class="news-date">Optimisations</span>
+        <h3>Interface nettoyée et aide mise à jour</h3>
+        <p>
+          L’ancien mode placement a été retiré, les panneaux se ferment plus proprement entre eux,
+          l’aide a été actualisée et l’accueil présente mieux le rôle de l’Atlas.
+        </p>
+      </article>
     </div>
   </div>
 
   <div id="helpPanel" class="help-panel is-hidden">
-    <div class="help-panel-header">
-      <div>
-        <p>Aide rapide</p>
-        <h2>Comment utiliser l’Atlas ?</h2>
-      </div>
-
-      <button id="closeHelpPanel" class="help-panel-close" type="button">×</button>
+  <div class="help-panel-header">
+    <div>
+      <p>Aide rapide</p>
+      <h2>Comment utiliser l’Atlas ?</h2>
     </div>
 
-    <div class="help-list">
-      <article class="help-item">
-        <span class="help-icon">🖱️</span>
-        <div>
-          <h3>Déplacer la carte</h3>
-          <p>
-            Maintiens le clic gauche sur la carte puis déplace ta souris pour naviguer.
-          </p>
-        </div>
-      </article>
-
-      <article class="help-item">
-        <span class="help-icon">＋</span>
-        <div>
-          <h3>Zoomer et recentrer</h3>
-          <p>
-            Utilise la molette de la souris ou les boutons −, + et Recentrer dans la barre du haut.
-          </p>
-        </div>
-      </article>
-
-      <article class="help-item">
-        <span class="help-icon">☰</span>
-        <div>
-          <h3>Explorer les lieux</h3>
-          <p>
-            Ouvre l’onglet Explorer à gauche pour rechercher un commerce, une institution,
-            un quartier ou un lieu précis.
-          </p>
-        </div>
-      </article>
-
-      <article class="help-item">
-        <span class="help-icon">◎</span>
-        <div>
-          <h3>Afficher les calques</h3>
-          <p>
-            Le panneau en haut à droite permet d’afficher ou masquer les lieux,
-            les ponts, les routes, les océans, les quartiers et les places.
-          </p>
-        </div>
-      </article>
-
-      <article class="help-item">
-        <span class="help-icon">✦</span>
-        <div>
-          <h3>Cliquer sur un élément</h3>
-          <p>
-            Clique sur un marqueur ou sur un élément de carte pour ouvrir sa fiche d’information.
-          </p>
-        </div>
-      </article>
-
-      <article class="help-item">
-        <span class="help-icon">⌖</span>
-        <div>
-          <h3>Mode placement</h3>
-          <p>
-            Active le mode placement pour récupérer facilement des coordonnées en pourcentage
-            sur la carte.
-          </p>
-        </div>
-      </article>
-    </div>
+    <button id="closeHelpPanel" class="help-panel-close" type="button">×</button>
   </div>
+
+  <div class="help-list">
+    <article class="help-item">
+      <span class="help-icon">🖱️</span>
+      <div>
+        <h3>Déplacer la carte</h3>
+        <p>
+          Maintiens le clic gauche sur la carte puis déplace ta souris pour naviguer
+          librement dans Karminéa.
+        </p>
+      </div>
+    </article>
+
+    <article class="help-item">
+      <span class="help-icon">＋</span>
+      <div>
+        <h3>Zoomer et recentrer</h3>
+        <p>
+          Utilise la molette de la souris ou les boutons −, + et Recentrer dans la barre
+          du haut pour ajuster la vue.
+        </p>
+      </div>
+    </article>
+
+    <article class="help-item">
+      <span class="help-icon">☰</span>
+      <div>
+        <h3>Explorer les lieux</h3>
+        <p>
+          Ouvre l’onglet Explorer à gauche pour rechercher un commerce, une institution,
+          un lieu de divertissement ou un service de santé.
+        </p>
+      </div>
+    </article>
+
+    <article class="help-item">
+      <span class="help-icon">⇄</span>
+      <div>
+        <h3>Passer des lieux aux éléments de carte</h3>
+        <p>
+          Dans l’Explorer, utilise les onglets Lieux et Éléments de carte pour passer
+          rapidement des marqueurs aux rues, ponts, quartiers, mers et places.
+        </p>
+      </div>
+    </article>
+
+    <article class="help-item">
+      <span class="help-icon">🔎</span>
+      <div>
+        <h3>Rechercher et filtrer</h3>
+        <p>
+          La barre de recherche permet de retrouver rapidement un lieu ou un élément de carte.
+          Les filtres permettent d’afficher seulement les catégories utiles.
+        </p>
+      </div>
+    </article>
+
+    <article class="help-item">
+      <span class="help-icon">◎</span>
+      <div>
+        <h3>Afficher ou masquer les calques</h3>
+        <p>
+          Le panneau en haut à droite permet d’afficher ou masquer les lieux, les routes,
+          les ponts, les océans, les quartiers et les places.
+        </p>
+      </div>
+    </article>
+
+    <article class="help-item">
+      <span class="help-icon">✦</span>
+      <div>
+        <h3>Consulter une fiche</h3>
+        <p>
+          Clique sur un marqueur ou sur un élément de carte pour ouvrir sa fiche descriptive :
+          nom, catégorie, quartier, description et coordonnées quand elles sont disponibles.
+        </p>
+      </div>
+    </article>
+
+    <article class="help-item">
+      <span class="help-icon">⌖</span>
+      <div>
+        <h3>Aller à des coordonnées</h3>
+        <p>
+          Ouvre le menu Outils, puis l’outil Aller à des coordonnées pour entrer une position
+          X / Z Minecraft et afficher une cible directement sur la carte.
+        </p>
+      </div>
+    </article>
+
+    <article class="help-item">
+      <span class="help-icon">➤</span>
+      <div>
+        <h3>Trouver un lieu selon son besoin</h3>
+        <p>
+          Dans le menu Outils, ouvre Parcours utiles pour afficher rapidement les commerces,
+          institutions, lieux de santé ou lieux de divertissement recensés.
+        </p>
+      </div>
+    </article>
+
+    <article class="help-item">
+      <span class="help-icon">🔗</span>
+      <div>
+        <h3>Partager une position</h3>
+        <p>
+          Depuis l’outil de coordonnées, tu peux copier un lien vers une position précise
+          afin de la partager facilement à un autre joueur.
+        </p>
+      </div>
+    </article>
+
+    <article class="help-item">
+      <span class="help-icon">✎</span>
+      <div>
+        <h3>Faire une remarque</h3>
+        <p>
+          Utilise l’onglet Remarque à droite pour signaler un bug, proposer une idée,
+          corriger une description ou indiquer un lieu manquant et directement générer le message ticket.
+        </p>
+      </div>
+    </article>
+
+    <article class="help-item">
+      <span class="help-icon">✦</span>
+      <div>
+        <h3>Consulter les nouveautés</h3>
+        <p>
+          Le bouton Nouveautés dans la barre du haut permet de suivre les dernières
+          évolutions de l’Atlas et les ajouts prévus.
+        </p>
+      </div>
+    </article>
+  </div>
+</div>
 
   <div id="welcomePanel" class="welcome-panel">
   <div class="welcome-card">
@@ -500,9 +1012,10 @@
     <h2>Bienvenue sur la carte officielle de Karminéa</h2>
 
     <p>
-      Cette plateforme a pour but de faciliter l’exploration de Karminéa, de retrouver
-      les lieux importants, de consulter les quartiers, les ponts, les rues, les mers
-      et les différents points d’intérêt recensés sur la carte.
+      Cette plateforme a pour but de faciliter l’exploration de Karminéa, aussi bien
+      pour les nouveaux arrivants que pour les habitants déjà installés. Elle permet
+      de retrouver les lieux importants, de consulter les quartiers, les ponts, les rues,
+      les mers et les différents points d’intérêt recensés sur la carte.
     </p>
 
     <p>
@@ -512,11 +1025,17 @@
     </p>
 
     <p>
+      Si certains points d’intérêt ne sont pas encore recensés, pas de panique :
+      l’Atlas est encore en cours d’enrichissement et de nouveaux lieux seront ajoutés
+      progressivement.
+    </p>
+
+    <p>
       La plateforme est en constante amélioration. Si vous remarquez un bug, un souci
-      d’ergonomie, une limite, une erreur dans un descriptif,une piste d’amélioration,
-      ou bien même tout simplement si vous avez une idée de fonctionnalité, vous pouvez 
+      d’ergonomie, une limite, une erreur dans un descriptif, une piste d’amélioration,
+      ou bien même tout simplement si vous avez une idée de fonctionnalité, vous pouvez
       me contacter sur Discord :
-      <strong>@Mahyster</strong>. Je serai ravi d'échanger avec vous !
+      <strong>@Mahyster</strong>. Je serai ravi d’échanger avec vous !
     </p>
 
     <p>
