@@ -1,16 +1,240 @@
 [
   {
-    "id": "pont-w",
-    "name": "Pont W",
-    "type": "pont",
-    "typeLabel": "Pont",
-    "architectureType": "Infrastructure de franchissement",
-    "description": "Pont reliant l'île principale et l'île du parlement",
-    "shape": "line",
-    "thickness": 30,
-    "points": [
-      { "xPercent": 39.77, "yPercent": 41.44 },
-      { "xPercent": 18.06, "yPercent": 49.46 }
-    ]
-  }
+  "id": "pont-w",
+  "name": "Pont W",
+  "type": "pont",
+  "typeLabel": "Pont",
+  "architectureType": "Infrastructure de franchissement",
+  "description": "Pont reliant l'île principale et l'île du parlement",
+  "shape": "line",
+  "points": [
+    {
+      "xPercent": 43.58,
+      "yPercent": 28.8
+    },
+    {
+      "xPercent": 26.92,
+      "yPercent": 35.18
+    }
+  ],
+  "thickness": 30
+},
+
+  {
+  "id": "quartier-claire-fontaine",
+  "name": "Quartier Claire Fontaine",
+  "type": "quartier",
+  "typeLabel": "Quartier",
+  "architectureType": "Zone côtière",
+  "description": "Quartier côtier de l'île principale de Karminéa. On peut y trouver la célèbre boutique de Golden Sluje",
+  "shape": "polygon",
+  "points": [
+    {
+      "xPercent": 77.13,
+      "yPercent": 38.93
+    },
+    {
+      "xPercent": 78.09,
+      "yPercent": 38.06
+    },
+    {
+      "xPercent": 78.27,
+      "yPercent": 35.91
+    },
+    {
+      "xPercent": 78.42,
+      "yPercent": 34.16
+    },
+    {
+      "xPercent": 78.76,
+      "yPercent": 33.88
+    },
+    {
+      "xPercent": 78.84,
+      "yPercent": 32.76
+    },
+    {
+      "xPercent": 80.04,
+      "yPercent": 31.16
+    },
+    {
+      "xPercent": 80,
+      "yPercent": 29.22
+    },
+    {
+      "xPercent": 81.34,
+      "yPercent": 28.51
+    },
+    {
+      "xPercent": 82.73,
+      "yPercent": 27.5
+    },
+    {
+      "xPercent": 84.37,
+      "yPercent": 26.69
+    },
+    {
+      "xPercent": 85.92,
+      "yPercent": 26.22
+    },
+    {
+      "xPercent": 87.52,
+      "yPercent": 26.1
+    },
+    {
+      "xPercent": 89.38,
+      "yPercent": 25.88
+    },
+    {
+      "xPercent": 95.01,
+      "yPercent": 25.89
+    },
+    {
+      "xPercent": 97.25,
+      "yPercent": 28.15
+    },
+    {
+      "xPercent": 96.85,
+      "yPercent": 31.59
+    },
+    {
+      "xPercent": 86.42,
+      "yPercent": 36.66
+    },
+    {
+      "xPercent": 81.93,
+      "yPercent": 38.8
+    }
+  ]
+},
+
+{
+  "id": "place-montecarlo",
+  "name": "Place Monte Carlo",
+  "type": "place",
+  "typeLabel": "Place",
+  "architectureType": "Zone urbaine",
+  "description": "Place centrale de l'île du parlement, en hommage à la famille propriétaire du casino",
+  "shape": "polygon",
+  "points": [
+    {
+      "xPercent": 24.38,
+      "yPercent": 50.05
+    },
+    {
+      "xPercent": 24.93,
+      "yPercent": 49.11
+    },
+    {
+      "xPercent": 25.97,
+      "yPercent": 48.52
+    },
+    {
+      "xPercent": 27.12,
+      "yPercent": 48.39
+    },
+    {
+      "xPercent": 28.13,
+      "yPercent": 48.58
+    },
+    {
+      "xPercent": 28.95,
+      "yPercent": 49.15
+    },
+    {
+      "xPercent": 29.48,
+      "yPercent": 49.82
+    },
+    {
+      "xPercent": 29.37,
+      "yPercent": 50.64
+    },
+    {
+      "xPercent": 28.9,
+      "yPercent": 51.2
+    },
+    {
+      "xPercent": 28.09,
+      "yPercent": 51.67
+    },
+    {
+      "xPercent": 26.96,
+      "yPercent": 51.85
+    },
+    {
+      "xPercent": 26.01,
+      "yPercent": 51.74
+    },
+    {
+      "xPercent": 25.09,
+      "yPercent": 51.34
+    },
+    {
+      "xPercent": 24.63,
+      "yPercent": 50.72
+    }
+  ]
+},
+
+{
+  "id": "allee-juliendupre",
+  "name": "Allée Juliendupré",
+  "type": "voirie",
+  "typeLabel": "Voirie",
+  "architectureType": "Axe de circulation",
+  "description": "Description à compléter.",
+  "shape": "line",
+  "points": [
+    {
+      "xPercent": 61.38,
+      "yPercent": 34.69
+    },
+    {
+      "xPercent": 58.71,
+      "yPercent": 34.65
+    },
+    {
+      "xPercent": 56.44,
+      "yPercent": 34.74
+    }
+  ],
+  "thickness": 15
+},
+
+  {
+  "id": "rue-de-kiki-et-koko",
+  "name": "Rue de Kiki et Koko",
+  "type": "voirie",
+  "typeLabel": "Voirie",
+  "architectureType": "Axe de circulation",
+  "description": "Description à compléter.",
+  "shape": "line",
+  "points": [
+    {
+      "xPercent": 54.55,
+      "yPercent": 31.4
+    },
+    {
+      "xPercent": 55.03,
+      "yPercent": 32.4
+    },
+    {
+      "xPercent": 55.61,
+      "yPercent": 33.5
+    },
+    {
+      "xPercent": 55.94,
+      "yPercent": 34.36
+    },
+    {
+      "xPercent": 56.29,
+      "yPercent": 35.39
+    },
+    {
+      "xPercent": 56.31,
+      "yPercent": 37.16
+    }
+  ],
+  "thickness": 25
+}
 ]
