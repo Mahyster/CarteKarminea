@@ -204,5 +204,44 @@
   "minecraftZ": 4,
   "xPercent": 24.93,
   "yPercent": 55.95
+},
+
+{
+  "id": "la-carotte-doree",
+  "name": "La carotte dorée",
+  "type": "commerce",
+  "typeLabel": "Commerce",
+  "district": "Centre-ville",
+  "description": "Vente de carottes dorées en libre service",
+  "minecraftX": 0,
+  "minecraftZ": 0,
+  "xPercent": 54.95,
+  "yPercent": 26.43
+},
+
+{
+  "id": "cabinet-de-dame-venus",
+  "name": "Cabinet de dame Venus",
+  "type": "sante",
+  "typeLabel": "Santé",
+  "district": "Centre-ville",
+  "description": "Dame Venus met à disposition ses compétences en psychologie et en sexologie afin d’accompagner les habitants avec écoute, bienveillance et discrétion.",
+  "minecraftX": 0,
+  "minecraftZ": 0,
+  "xPercent": 51.31,
+  "yPercent": 30.06
+},
+
+{
+  "id": "ichi-che-toudi-bon",
+  "name": "Ichi ché toudi bon",
+  "type": "commerce",
+  "typeLabel": "Commerce",
+  "district": "Centre-ville",
+  "description": "Célèbre pour ses traditions issues des Terres du Nord, cette baraque à frites saura vous satisfaire avec des produits nordiens d'exception",
+  "minecraftX": 0,
+  "minecraftZ": 0,
+  "xPercent": 59.77,
+  "yPercent": 30.13
 }
 ]
