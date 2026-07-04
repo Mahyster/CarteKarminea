@@ -236,5 +236,315 @@
     }
   ],
   "thickness": 25
+},
+
+{
+  "id": "rue-soraka",
+  "name": "Rue Soraka",
+  "type": "voirie",
+  "typeLabel": "Voirie",
+  "architectureType": "Axe de circulation",
+  "description": "Rue menant vers l'hôpital de Karminéa",
+  "shape": "line",
+  "points": [
+    {
+      "xPercent": 60.59,
+      "yPercent": 29.39
+    },
+    {
+      "xPercent": 58.8,
+      "yPercent": 29.40
+    },
+    {
+      "xPercent": 58.73,
+      "yPercent": 28.72
+    },
+    {
+      "xPercent": 57.04,
+      "yPercent": 28.63
+    },
+    {
+      "xPercent": 56.95,
+      "yPercent": 25.99
+    },
+    {
+      "xPercent": 59.09,
+      "yPercent": 25.98
+    },
+    {
+      "xPercent": 59.18,
+      "yPercent": 26.29
+    },
+    {
+      "xPercent": 59.46,
+      "yPercent": 26.29
+    }
+  ],
+  "thickness": 20
+},
+
+{
+  "id": "boulevard-playtwo",
+  "name": "Boulevard PlayTwo",
+  "type": "voirie",
+  "typeLabel": "Voirie",
+  "architectureType": "Axe de circulation",
+  "description": "Axe principale allant du centre-ville jusque PlayTwo Studio",
+  "shape": "line",
+  "points": [
+    {
+      "xPercent": 64.1,
+      "yPercent": 35
+    },
+    {
+      "xPercent": 64.1,
+      "yPercent": 41.25
+    },
+    {
+      "xPercent": 66.06,
+      "yPercent": 42.63
+    },
+    {
+      "xPercent": 66.29,
+      "yPercent": 43.41
+    },
+    {
+      "xPercent": 66.4,
+      "yPercent": 44.23
+    }
+  ],
+  "thickness": 30
+},
+
+{
+  "id": "chemin-de-benzouz",
+  "name": "Chemin de Benzouz",
+  "type": "voirie",
+  "typeLabel": "Voirie",
+  "architectureType": "Chemin",
+  "description": "En l'honneur de Benzouz, disparu",
+  "shape": "line",
+  "points": [
+    {
+      "xPercent": 64.27,
+      "yPercent": 41.91
+    },
+    {
+      "xPercent": 62.99,
+      "yPercent": 42.33
+    },
+    {
+      "xPercent": 62.06,
+      "yPercent": 42.6
+    },
+    {
+      "xPercent": 59.99,
+      "yPercent": 42.61
+    },
+    {
+      "xPercent": 59.31,
+      "yPercent": 42.57
+    },
+    {
+      "xPercent": 58.95,
+      "yPercent": 42.74
+    }
+  ],
+  "thickness": 15
+},
+
+{
+  "id": "rue-de-la-bcc",
+  "name": "Rue de la BCC",
+  "type": "voirie",
+  "typeLabel": "Voirie",
+  "architectureType": "Axe de circulation",
+  "description": "Description à compléter.",
+  "shape": "line",
+  "points": [
+    {
+      "xPercent": 70.54,
+      "yPercent": 44.07
+    },
+    {
+      "xPercent": 75.08,
+      "yPercent": 44.11
+    }
+  ],
+  "thickness": 25
+},
+
+{
+  "id": "jardins-d-horace",
+  "name": "Jardins d'Horace",
+  "type": "place",
+  "typeLabel": "Place",
+  "architectureType": "Zone urbaine",
+  "description": "Jardins fleuri, proche de la banque du même nom",
+  "shape": "polygon",
+  "points": [
+    {
+      "xPercent": 72.75,
+      "yPercent": 24.65
+    },
+    {
+      "xPercent": 72.62,
+      "yPercent": 26.84
+    },
+    {
+      "xPercent": 72,
+      "yPercent": 29.01
+    },
+    {
+      "xPercent": 74.34,
+      "yPercent": 29.26
+    },
+    {
+      "xPercent": 79.88,
+      "yPercent": 29.2
+    },
+    {
+      "xPercent": 79.99,
+      "yPercent": 26.84
+    },
+    {
+      "xPercent": 79.59,
+      "yPercent": 24.73
+    }
+  ]
+},
+
+{
+  "id": "route-119",
+  "name": "Route 119",
+  "type": "voirie",
+  "typeLabel": "Voirie",
+  "architectureType": "Axe de circulation",
+  "description": "Rentrons, il pleut...",
+  "shape": "line",
+  "points": [
+    {
+      "xPercent": 53.23,
+      "yPercent": 22.59
+    },
+    {
+      "xPercent": 53.25,
+      "yPercent": 27.49
+    },
+    {
+      "xPercent": 53.62,
+      "yPercent": 28.29
+    },
+    {
+      "xPercent": 53.82,
+      "yPercent": 28.99
+    },
+    {
+      "xPercent": 53.85,
+      "yPercent": 31.38
+    },
+    {
+      "xPercent": 53.74,
+      "yPercent": 31.99
+    },
+    {
+      "xPercent": 53.4,
+      "yPercent": 32.62
+    },
+    {
+      "xPercent": 53.21,
+      "yPercent": 33.23
+    }
+  ],
+  "thickness": 30
+},
+
+{
+  "id": "ruisseau-mich-el",
+  "name": "Ruisseau Mich'El",
+  "type": "hydrographie",
+  "typeLabel": "Hydrographie",
+  "architectureType": "Cours d'eau",
+  "description": "Michel, célèbre boulanger, y plantait en son contour, un blé d'exception",
+  "shape": "line",
+  "points": [
+    {
+      "xPercent": 14.14,
+      "yPercent": 55.28
+    },
+    {
+      "xPercent": 15.31,
+      "yPercent": 54.35
+    },
+    {
+      "xPercent": 16.8,
+      "yPercent": 53.43
+    },
+    {
+      "xPercent": 17.45,
+      "yPercent": 51.95
+    },
+    {
+      "xPercent": 17.97,
+      "yPercent": 50.37
+    },
+    {
+      "xPercent": 19.23,
+      "yPercent": 50.87
+    },
+    {
+      "xPercent": 20.92,
+      "yPercent": 50.01
+    },
+    {
+      "xPercent": 23.38,
+      "yPercent": 48
+    },
+    {
+      "xPercent": 25.56,
+      "yPercent": 46.6
+    },
+    {
+      "xPercent": 26.95,
+      "yPercent": 47.04
+    },
+    {
+      "xPercent": 28.41,
+      "yPercent": 46.42
+    },
+    {
+      "xPercent": 29.97,
+      "yPercent": 46.42
+    },
+    {
+      "xPercent": 29.61,
+      "yPercent": 45.6
+    },
+    {
+      "xPercent": 31.07,
+      "yPercent": 44.39
+    },
+    {
+      "xPercent": 31.53,
+      "yPercent": 44.48
+    },
+    {
+      "xPercent": 32.14,
+      "yPercent": 44.11
+    },
+    {
+      "xPercent": 32.7,
+      "yPercent": 44.23
+    },
+    {
+      "xPercent": 33.41,
+      "yPercent": 43.72
+    },
+    {
+      "xPercent": 34.12,
+      "yPercent": 43.65
+    }
+  ],
+  "thickness": 20
 }
 ]
