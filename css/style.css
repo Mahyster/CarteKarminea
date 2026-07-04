@@ -1188,15 +1188,18 @@ body.is-creation-clean .markers-layer {
   fill: rgba(194, 122, 44, 0.16);
 }
 
+.feature-visual.feature-hydrographie,
 .feature-visual.feature-ocean {
   stroke: rgba(34, 105, 190, 0.9);
   filter: none;
 }
 
+.feature-label.feature-hydrographie,
 .feature-label.feature-ocean {
   fill: #1f5d9e;
 }
 
+.feature-visual.feature-hydrographie.feature-shape-polygon,
 .feature-visual.feature-ocean.feature-shape-polygon {
   fill: rgba(34, 105, 190, 0.18);
 }
@@ -2126,7 +2129,7 @@ body.is-creation-clean .markers-layer {
   border-left-color: #c27a2c;
 }
 
-.feature-list-item.list-feature-ocean {
+.feature-list-item.list-feature-hydrographie {
   border-left-color: #2269be;
 }
 
@@ -2397,7 +2400,7 @@ body.is-creation-clean .markers-layer {
   background: #c27a2c;
 }
 
-.category-ocean {
+.category-hydrographie {
   background: #2269be;
 }
 
@@ -4453,7 +4456,7 @@ body.is-creation-clean .markers-layer {
   stroke: rgba(194, 122, 44, 0.95);
 }
 
-.creation-preview-ocean {
+.creation-preview-hydrographie {
   fill: rgba(34, 105, 190, 0.16);
   stroke: rgba(34, 105, 190, 0.95);
 }
@@ -5439,4 +5442,27 @@ body.is-creation-clean .markers-layer {
   .feature-card {
     max-height: 62vh;
   }
+}
+
+/* =========================================================
+   CORRECTIF V3 - Explorer / Éléments de carte
+   ========================================================= */
+
+.feature-list-item {
+  min-height: 72px;
+  max-height: 120px;
+}
+
+.feature-list-item strong {
+  line-height: 1.2;
+}
+
+.feature-list-item span,
+.feature-list-item small {
+  line-height: 1.25;
+}
+
+.feature-list-item.is-hidden {
+  min-height: 0;
+  max-height: 0;
 }
