@@ -151,6 +151,12 @@ let pointerDownClientX = 0;
 let pointerDownClientY = 0;
 let hasPointerMoved = false;
 
+const activeViewportPointers = new Map();
+let isPinching = false;
+let pinchStartDistance = 0;
+let pinchStartScale = 1;
+let pinchStartWorldCenter = { x: 0, y: 0 };
+
 let smoothness = 0.18;
 
 let activeExplorerPage = "places";
@@ -204,6 +210,12 @@ const defaultFeatureArchitectures = {
 
 const normalSmoothness = 0.18;
 const focusSmoothness = 0.01;
+
+const mobileLayoutQuery = window.matchMedia("(max-width: 768px)");
+
+function isMobileLayout() {
+  return mobileLayoutQuery.matches;
+}
 
 
 
@@ -921,6 +933,10 @@ function renderPlacesList() {
     button.addEventListener("click", () => {
       openPlaceCard(place);
       focusPlace(place);
+
+      if (isMobileLayout()) {
+        closeExplorerPanel();
+      }
     });
 
     placesList.appendChild(button);
@@ -1008,6 +1024,10 @@ function renderFeaturesList() {
     button.addEventListener("click", () => {
       openFeatureCard(feature);
       focusFeature(feature);
+
+      if (isMobileLayout()) {
+        closeExplorerPanel();
+      }
     });
 
     featuresList.appendChild(button);
@@ -2312,10 +2332,105 @@ window.addEventListener("resize", () => {
   updateCreationPreview();
 });
 
+function getViewportPointerCenter(pointerA, pointerB) {
+  return {
+    clientX: (pointerA.clientX + pointerB.clientX) / 2,
+    clientY: (pointerA.clientY + pointerB.clientY) / 2
+  };
+}
+
+function getViewportPointerDistance(pointerA, pointerB) {
+  return Math.hypot(
+    pointerA.clientX - pointerB.clientX,
+    pointerA.clientY - pointerB.clientY
+  );
+}
+
+function startPinchZoom() {
+  if (activeViewportPointers.size < 2) return;
+
+  const [pointerA, pointerB] = Array.from(activeViewportPointers.values());
+  const center = getViewportPointerCenter(pointerA, pointerB);
+  const rect = viewport.getBoundingClientRect();
+
+  const centerX = center.clientX - rect.left;
+  const centerY = center.clientY - rect.top;
+
+  isPinching = true;
+  isDragging = false;
+  hasPointerMoved = true;
+
+  pinchStartDistance = getViewportPointerDistance(pointerA, pointerB);
+  pinchStartScale = targetScale;
+  pinchStartWorldCenter = {
+    x: (centerX - targetX) / targetScale,
+    y: (centerY - targetY) / targetScale
+  };
+}
+
+function updatePinchZoom() {
+  if (!isPinching || activeViewportPointers.size < 2) return;
+
+  const [pointerA, pointerB] = Array.from(activeViewportPointers.values());
+  const currentDistance = getViewportPointerDistance(pointerA, pointerB);
+
+  if (!pinchStartDistance || !currentDistance) return;
+
+  const center = getViewportPointerCenter(pointerA, pointerB);
+  const rect = viewport.getBoundingClientRect();
+  const centerX = center.clientX - rect.left;
+  const centerY = center.clientY - rect.top;
+
+  const nextScale = Math.max(
+    minScale,
+    Math.min(maxScale, pinchStartScale * (currentDistance / pinchStartDistance))
+  );
+
+  targetScale = nextScale;
+  targetX = centerX - pinchStartWorldCenter.x * nextScale;
+  targetY = centerY - pinchStartWorldCenter.y * nextScale;
+}
+
+function stopViewportPointer(event) {
+  activeViewportPointers.delete(event.pointerId);
+
+  if (activeViewportPointers.size === 0) {
+    isDragging = false;
+    isPinching = false;
+    viewport.classList.remove("is-dragging");
+    return;
+  }
+
+  if (isPinching && activeViewportPointers.size === 1) {
+    const remainingPointer = Array.from(activeViewportPointers.values())[0];
+
+    isPinching = false;
+    isDragging = true;
+    pointerDownClientX = remainingPointer.clientX;
+    pointerDownClientY = remainingPointer.clientY;
+    startX = remainingPointer.clientX - targetX;
+    startY = remainingPointer.clientY - targetY;
+  }
+}
+
 viewport.addEventListener("pointerdown", (event) => {
-  if (event.button !== 0) return;
+  if (event.pointerType !== "touch" && event.button !== 0) return;
+
+  activeViewportPointers.set(event.pointerId, {
+    clientX: event.clientX,
+    clientY: event.clientY
+  });
+
+  viewport.setPointerCapture(event.pointerId);
+
+  if (activeViewportPointers.size >= 2) {
+    viewport.classList.add("is-dragging");
+    startPinchZoom();
+    return;
+  }
 
   isDragging = true;
+  isPinching = false;
   hasPointerMoved = false;
 
   pointerDownClientX = event.clientX;
@@ -2325,11 +2440,22 @@ viewport.addEventListener("pointerdown", (event) => {
   startY = event.clientY - targetY;
 
   viewport.classList.add("is-dragging");
-  viewport.setPointerCapture(event.pointerId);
 });
 
 viewport.addEventListener("pointermove", (event) => {
   updateCoordinateHover(event);
+
+  if (activeViewportPointers.has(event.pointerId)) {
+    activeViewportPointers.set(event.pointerId, {
+      clientX: event.clientX,
+      clientY: event.clientY
+    });
+  }
+
+  if (isPinching) {
+    updatePinchZoom();
+    return;
+  }
 
   if (!isDragging) return;
 
@@ -2347,17 +2473,17 @@ viewport.addEventListener("pointermove", (event) => {
 });
 
 viewport.addEventListener("pointerup", (event) => {
-  if (creationMode && !hasPointerMoved) {
+  const wasPinching = isPinching;
+
+  if (creationMode && !hasPointerMoved && !wasPinching) {
     handleCreationMapClick(event);
   }
 
-  isDragging = false;
-  viewport.classList.remove("is-dragging");
+  stopViewportPointer(event);
 });
 
-viewport.addEventListener("pointercancel", () => {
-  isDragging = false;
-  viewport.classList.remove("is-dragging");
+viewport.addEventListener("pointercancel", (event) => {
+  stopViewportPointer(event);
 });
 
 viewport.addEventListener(
